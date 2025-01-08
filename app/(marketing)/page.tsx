@@ -6,7 +6,7 @@ import HeroSection from './components/hero-section'
 const MarketkingPage = () => {
   return (
     <div>
-      <HeroSection />
+      <HeroSection/> 
     </div>
   )
 }

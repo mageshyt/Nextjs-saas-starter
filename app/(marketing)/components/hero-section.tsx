@@ -1,68 +1,70 @@
-import { ArrowRight, Github } from 'lucide-react';
-import Link from "next/link";
-import Image from 'next/image';
+"use client"
+import AnimatedShinyText from '@/components/ui/animated-shiny-text'
 import { Button } from '@/components/ui/button'
-import { BorderBeam } from '@/components/ui/border-beam';
+import { ArrowRightIcon } from 'lucide-react'
+import { useRef } from 'react'
+import { useInView } from 'framer-motion'
+import { BorderBeam } from '@/components/ui/border-beam'
+import Image from 'next/image'
 
-export default function HeroSection() {
+const HeroSection = () => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
   return (
-    <section className='flex flex-col items-center justify-center leading-6 mt-[3rem]' aria-label="Nextjs Starter Kit Hero">
-      <h1 className={` text-2xl sm:text-2xl md:text-3xl lg:text-4xl scroll-m-20 font-semibold tracking-tight text-center max-w-[1120px] bg-gradient-to-b dark:text-white`}>
-        Nextjs Starter Kit: Build & Ship Fast
-      </h1>
-      <p className="mx-auto max-w-[700px] text-gray-500 text-center mt-2 dark:text-gray-400">
-        The Ultimate Nextjs 14 Starter Kit for quickly building your SaaS, giving you time to focus on what really matters
-      </p>
-      <div className="flex justify-center items-center gap-3">
-        <Link href="/dashboard" className="mt-5">
-          <Button className="animate-buttonheartbeat rounded-md bg-blue-600 hover:bg-blue-500 text-sm font-semibold text-white">
-            Get Started
-          </Button>
-        </Link>
-
-        <Link
-          href="https://discord.gg/HUcHdrrDgY"
-          target='_blank'
-          className="mt-5"
-          aria-label="Join Discord (opens in a new tab)"
-        >
-          <Button variant="outline" className="flex gap-1">
-            Join Discord
-            <ArrowRight className='w-4 h-4' aria-hidden="true" />
-          </Button>
-        </Link>
-        <Link
-          href="https://github.com/michaelshimeles/nextjs14-starter-template"
-          target='_blank'
-          className='animate-buttonheartbeat border p-2 rounded-full mt-5 hover:dark:bg-black hover:cursor-pointer'
-          aria-label="View NextJS 14 Starter Template on GitHub"
-        >
-          <Github className='w-5 h-5' aria-hidden="true" />
-        </Link>
+    <section id='hero-section' className='relative mx-auto mt-32 max-w-[80rem] px-6 text-center md:px-8'>
+      {/* Animated Shiny Text */}
+      <div className='backdrop-filter-[12px] inline-flex h-8 items-center justify-between rounded-full border border-white/5 bg-white/10 px-3 text-xs text-white dark:text-black transition-all ease-in hover:cursor-pointer hover:bg-white/20 group gap-1 translate-y-[-1rem] animate-fade-in opacity-0'>
+        <AnimatedShinyText className='inline-flex items-center justify-center'>
+          <span>✨ Introducing Next SASS Starter</span>{' '}
+          <ArrowRightIcon className='ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5' />
+        </AnimatedShinyText>
       </div>
-      <div>
-        <div className="relative flex max-w-6xl justify-center overflow-hidden mt-7">
-          <div className="relative rounded-xl">
-            <Image
-              src="/banner.png"
-              alt="Nextjs Starter Kit Dashboard Preview"
-              width={1100}
-              height={550}
-              priority={true}
-              className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
-            />
-            <Image
-              src="/banner.png"
-              width={1100}
-              height={550}
-              alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
-              priority={true}
-              className="dark:block rounded-[inherit] border object-contain shadow-lg hidden"
-            />
-            <BorderBeam size={250} duration={12} delay={9} />
-          </div>
+
+      {/* Hero Section */}
+      <h1
+        className='bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-6xl md:text-7xl lg:text-8xl translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]'
+      >
+        Build Smarter, Style Faster
+        <br className='hidden md:block' />
+        with Next.js + Sass.
+      </h1>
+      <p className='mb-12 text-lg tracking-tight text-gray-400 md:text-xl text-balance translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]'>
+        Beautifully designed, crafted, implemented, and built with the best tech stack
+        <br className='hidden md:block' /> Tailwind CSS, React, and Framer Motion.
+      </p>
+
+      {/* Get Started */}
+      <Button className='translate-y-[-1rem]  animate-fade-in gap-1 rounded-lg text-white dark:text-black opacity-0 ease-in-out [--animation-delay:600ms]'>
+        <span>Get Started for free </span>
+        <ArrowRightIcon className='ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1' />
+      </Button>
+
+
+      <div
+        ref={ref}
+        className='relative mt-[8rem] animate-fade-up opacity-0 [--animation-delay:400ms] [perspective:2000px] after:absolute after:inset-0 after:z-50 after:[background:linear-gradient(to_top,hsl(var(--background))_30%,transparent)]'>
+        <div
+          className={`rounded-xl border border-white/10 bg-white bg-opacity-[0.01] before:absolute before:bottom-1/2 before:left-0 before:top-0 before:h-full before:w-full before:opacity-0 before:[filter:blur(180px)] before:[background-image:linear-gradient(to_bottom,var(--primary-color),var(--primary-color),transparent_40%)] ${inView ? 'before:animate-image-glow' : ''
+            }`}>
+          <BorderBeam
+            size={200}
+            duration={12}
+            delay={11}
+            colorFrom='var(--primary-color)'
+            colorTo='var(--secondary-color)'
+          />
+          <Image
+            src='/banner.png'
+            className='hidden relative w-full h-full rounded-[inherit] border object-contain dark:block'
+            width={1336}
+            height={800}
+            alt='Hero Image'
+          />
         </div>
       </div>
+
     </section>
   )
 }
+
+export default HeroSection
