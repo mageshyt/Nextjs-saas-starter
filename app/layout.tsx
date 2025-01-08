@@ -27,28 +27,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthWrapper>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            storageKey="theme"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <QueryProvider >
+            {/* <AuthWrapper> */}
 
 
-            <QueryProvider >
-              <ToastProvider />
-              {children}
-            </QueryProvider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </AuthWrapper>
+            {/* <ToastProvider /> */}
+            {children}
+            {/*   </AuthWrapper> */}
+          </QueryProvider>
+        </ThemeProvider>
+      </body>
+    </html >
   );
 }
