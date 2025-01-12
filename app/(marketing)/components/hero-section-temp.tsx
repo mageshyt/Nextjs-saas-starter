@@ -6,14 +6,12 @@ import { useRef } from 'react'
 import { useInView } from 'framer-motion'
 import { BorderBeam } from '@/components/ui/border-beam'
 import Image from 'next/image'
-import AnimatedGridPattern from '@/components/ui/animated-grid-pattern'
-import { cn } from '@/lib/utils'
 
-const HeroSection = () => {
+const HeroSectionTemp = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
   return (
-    <section id='hero-section' className='relative mx-auto mt-32 max-w-[80rem] px-6 text-center md:px-8'>
+    <section id='hero-section' className='relative mx-auto mt-32 max-w-[80rem] px-4 text-center md:px-8'>
       {/* Animated Shiny Text */}
       <div className='backdrop-filter-[12px] inline-flex h-8 items-center justify-between rounded-full border border-white/5 bg-white/10 px-3 text-xs text-white dark:text-black transition-all ease-in hover:cursor-pointer hover:bg-white/20 group gap-1 translate-y-[-1rem] animate-fade-in opacity-0'>
         <AnimatedShinyText className='inline-flex items-center justify-center'>
@@ -22,16 +20,6 @@ const HeroSection = () => {
         </AnimatedShinyText>
       </div>
 
-      <AnimatedGridPattern
-        numSquares={30}
-        maxOpacity={0.1}
-        duration={3}
-        repeatDelay={1}
-        className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-          "inset-x-0 inset-y-[-80%] animate-fade-in opacity-0 h-[200%] skew-y-12",
-        )}
-      />
       {/* Hero Section */}
       <h1
         className='bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-6xl md:text-7xl lg:text-8xl translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]'
@@ -63,7 +51,7 @@ const HeroSection = () => {
             duration={12}
             delay={11}
             colorFrom='var(--primary-color)'
-            colorTo='var(--secondary-color)'
+            colorTo='var(--seconday-color)'
           />
           <Image
             src='/banner.png'
@@ -79,4 +67,4 @@ const HeroSection = () => {
   )
 }
 
-export default HeroSection
+export default HeroSectionTemp
