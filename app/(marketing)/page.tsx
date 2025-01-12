@@ -4,6 +4,7 @@ import React from 'react'
 import HeroSection from './components/hero-section'
 import TechStack from './components/tech-stack-section'
 import FeatureSection from './components/feature-section'
+import PricingSection from './components/pricing-section'
 
 
 const MarketkingPage = () => {
@@ -12,6 +13,7 @@ const MarketkingPage = () => {
       <HeroSection />
       <TechStack />
       <FeatureSection />
+      <PricingSection />
     </div>
   )
 }
