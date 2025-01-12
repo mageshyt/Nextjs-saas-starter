@@ -1,3 +1,4 @@
+import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 
 interface MarketingLayoutProps {
@@ -9,6 +10,7 @@ export default async function MarketingLayout({ children }: MarketingLayoutProps
     <>
       <Navbar/>
       <main className='mx-auto mt-4 p-4 flex-1 overflow-hidden'>{children}</main>
+      <Footer/>
     </>
   );
 }
