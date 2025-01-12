@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       pathname: '/**'
     }, {
       protocol: 'https',
-      hostname: 'seo-heist.s3.amazonaws.com',
+      hostname: '88ps8qpvu9.ufs.sh',
       port: '',
       pathname: '/**'
     }, {

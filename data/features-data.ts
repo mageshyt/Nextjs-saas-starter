@@ -1,0 +1,81 @@
+export const featuresData= [
+  {
+    id: 1,
+    name: 'Next.js 15',
+    description: 'The latest version of the React framework, featuring server-side rendering, static site generation, and enhanced performance.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMWz1M36yqvd9GhouNBzexMfsbAESL4a7qc5Dw',
+    url: 'https://nextjs.org/',
+  },
+  {
+    id: 2,
+    name: 'TypeScript',
+    description: 'A strongly typed superset of JavaScript that enhances code maintainability and ensures scalability.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMZ60C92EygvAhwSdncijamF4oYCpNfEMb5963',
+    url: 'https://www.typescriptlang.org/',
+  },
+  {
+    id: 3,
+    name: 'Tailwind CSS',
+    description: 'A utility-first CSS framework that simplifies the process of creating custom designs with ease.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMCGbRy0UO5baidrATgfUVeOw6NZluLjMXh2yv',
+    url: 'https://tailwindui.com/',
+  },
+  {
+    id: 4,
+    name: 'Shadcn UI',
+    description: 'Beautifully designed components for modern applications by Shadcn.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMVQW08nGNs9LemO4XSdGPRwJ5kW2FHDv8IbUg',
+    url: 'https://ui.shadcn.com/',
+  },
+  {
+    id: 5,
+    name: 'Clerk Authentication',
+    description: 'A seamless and secure authentication solution for web applications.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMPbkO0rSN0OJKXsaSUYb6zQMVmHiIxRvZefWo',
+    url: 'https://clerk.com/',
+  },
+  {
+    id: 6,
+    name: 'Supabase (PostgreSQL)',
+    description: 'An open-source, scalable database built on PostgreSQL with rich features.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMbgARJTxZmlyrU4YN1C50kBLt9WfDqxEnJ6hR',
+    url: 'https://supabase.com/',
+  },
+  {
+    id: 7,
+    name: 'Prisma ORM',
+    description: 'A modern database toolkit for TypeScript and Node.js, simplifying database interactions.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMEvKK6za7xISD2pV6hjWiOwfoMuBQmZeH0Pa3',
+    url: 'https://prisma.io/',
+  },
+  {
+    id: 8,
+    name: 'Stripe Subscriptions & Payments',
+    description: 'A secure and reliable payment processing solution for subscriptions and one-time transactions.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMjA9UEbTB7rvFXWyPQ9sJxLVpuCIdnqlYiaf6',
+    url: 'https://stripe.com/',
+  },
+  {
+    id: 9,
+    name: 'TanStack Query',
+    description: 'A powerful library for client-side data fetching, caching, and synchronization.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMTWM186K1iq5QXC7lrYRI3o0bjVpwKcZWLPDO',
+    url: 'https://tanstack.com/query/v5',
+  },
+  {
+    id: 10,
+    name: 'Upstash (Redis)',
+    description: 'A cloud-based Redis database service ideal for rate-limiting and real-time data.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmMbh41wYxZmlyrU4YN1C50kBLt9WfDqxEnJ6hR',
+    url: 'https://upstash.com/',
+  },
+  {
+    id: 11,
+    name: 'Vitest',
+    description: 'A modern testing platform for Next.js applications, providing a seamless testing experience.',
+    image: 'https://88ps8qpvu9.ufs.sh/f/qVf4rg0WewmM4OqSNjttOjxVTirfAd5a8y3gQDkNnP1z9UmK',
+    url: 'https://vitest.dev/',
+  },
+];
+
+
