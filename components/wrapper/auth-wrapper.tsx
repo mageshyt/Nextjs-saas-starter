@@ -7,7 +7,13 @@ interface AuthWrapperProps {
 
 const AuthWrapper = ({ children }: AuthWrapperProps) => {
 
-  return <ClerkProvider dynamic>{children}</ClerkProvider>;
+  return <ClerkProvider
+    appearance={{
+      layout: {
+        unsafe_disableDevelopmentModeWarnings: true
+      }
+    }}
+    dynamic>{children}</ClerkProvider>;
 };
 
 export default AuthWrapper;

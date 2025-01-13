@@ -33,25 +33,13 @@ export const metadata: Metadata = {
     title: "Next.js Starter Kit - Build Fast and Modern Apps",
     description:
       "Get a head start on your Next.js projects with our comprehensive Starter Kit. Includes optimized performance, reusable components, and modern design.",
-    // TODO: Replace the URL and images with your own
-    url: "https://your-nextjs-starter-kit-url.com",
-    images: [
-      {
-        url: "https://your-nextjs-starter-kit-url.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Next.js Starter Kit",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Next.js Starter Kit - Build Fast and Modern Apps",
     description:
       "Streamline your web development process with our Next.js Starter Kit. Optimized for speed and scalability with modern design principles.",
-    images: ["https://your-nextjs-starter-kit-url.com/twitter-image.jpg"],
   },
-  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({

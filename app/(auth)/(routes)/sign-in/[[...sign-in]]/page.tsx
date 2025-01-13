@@ -1,6 +1,5 @@
-import { ClerkLoaded, ClerkLoading, SignIn, SignUp } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
 
 export default function SignInPage() {
   return (
@@ -11,7 +10,7 @@ export default function SignInPage() {
       <div className="col-span-2 h-full flex-col items-center justify-center px-4 lg:flex">
         <div className="space-y-4 pt-16 text-center">
           <h1 className="text-muted-[#2E2A47] text-3xl font-bold dark:text-white">
-            Welcome to NestJs Starter
+            Welcome to NestJs Starter Kit 🚀
           </h1>
           <p className="text-base  text-[#7E8CA0]">
             Login to your account to get started
