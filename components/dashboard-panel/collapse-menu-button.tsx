@@ -103,35 +103,41 @@ export function CollapseMenuButton({
       </CollapsibleTrigger>
       <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
         {submenus.map(({ href, label, active }, index) => (
-          <Button
+          <div
             key={index}
-            variant={
-              (active === undefined && pathname === href) || active
-                ? "secondary"
-                : "ghost"
-            }
-            className="w-full justify-start h-10 mb-1"
-            asChild
+            className="relative pl-4"
+            style={{
+              borderLeft: "1.9px dashed #ccc", // Dashed border on the left
+              marginLeft: "30px", // Adjust to align with parent item
+              paddingLeft: "10px", // Ensure spacing from the border
+            }}
           >
-            <Link href={href}>
-              <span className="mr-4 ml-2">
-                <Dot size={18} />
-              </span>
-              <p
-                className={cn(
-                  "max-w-[170px] truncate",
-                  isOpen
-                    ? "translate-x-0 opacity-100"
-                    : "-translate-x-96 opacity-0"
-                )}
-              >
-                {label}
-              </p>
-            </Link>
-          </Button>
+            <Button
+              variant={
+                (active === undefined && pathname === href) || active
+                  ? "secondary"
+                  : "ghost"
+              }
+              className="w-full justify-start h-10 mb-1"
+              asChild
+            >
+              <Link href={href}>
+                <div className="border-b-[1.9px] border-dashed border-gray-200 w-6 h-[1.9px] -ml-4 mr-1"></div>
+                <p
+                  className={cn(
+                    "max-w-[170px] truncate",
+                    isOpen
+                      ? "translate-x-0 opacity-100"
+                      : "-translate-x-96 opacity-0"
+                  )}
+                >
+                  {label}
+                </p>
+              </Link>
+            </Button>
+          </div>
         ))}
-      </CollapsibleContent>
-    </Collapsible>
+      </CollapsibleContent>    </Collapsible>
   ) : (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -173,10 +179,9 @@ export function CollapseMenuButton({
         {submenus.map(({ href, label, active }, index) => (
           <DropdownMenuItem key={index} asChild>
             <Link
-              className={`cursor-pointer ${
-                ((active === undefined && pathname === href) || active) &&
+              className={`cursor-pointer ${((active === undefined && pathname === href) || active) &&
                 "bg-secondary"
-              }`}
+                }`}
               href={href}
             >
               <p className="max-w-[180px] truncate">{label}</p>
