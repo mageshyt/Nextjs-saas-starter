@@ -16,18 +16,18 @@ const Navbar = () => {
 
         {/* Navigation - Login  */}
         <div className='ml-auto gap-6 flex h-full items-center'>
-          <Link href='/sing-in'>
-            <Button variant={"ghost"} className=''>
+          <Button variant={"ghost"} className='' asChild>
+            <Link href='/sign-in'>
               Sign In
-            </Button>
-          </Link>
+            </Link>
+          </Button>
 
 
-          <Link href='/sing-in'>
-            <Button>
+          <Button asChild>
+            <Link href='/sign-up'>
               Sign up
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     </header >
