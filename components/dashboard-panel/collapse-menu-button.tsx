@@ -118,7 +118,7 @@ export function CollapseMenuButton({
                   ? "secondary"
                   : "ghost"
               }
-              className="w-full justify-start h-10 mb-1"
+              className="w-full justify-start h-10 mb-1 hover:bg-white/0 hover:brightness-90"
               asChild
             >
               <Link href={href}>

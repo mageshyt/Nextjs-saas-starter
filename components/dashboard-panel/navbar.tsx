@@ -2,6 +2,7 @@ import React from "react";
 import MobileSidebar from "./mobile-sidebar";
 import UserProfile from "./nav-user";
 import Searchbar from "./search-bar";
+import { ModeToggle } from "../mode-toggle";
 
 const Navbar = () => {
   return (
@@ -13,7 +14,8 @@ const Navbar = () => {
           <Searchbar />
         </div>
         {/* User Profile */}
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-4">
+          <ModeToggle />
           <UserProfile />
         </div>
       </div>
