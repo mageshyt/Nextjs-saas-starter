@@ -5,15 +5,16 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
+
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model user {
-  id                Int      @id @default(autoincrement())
+  id                String   @id @default(uuid())
   created_time      DateTime @default(now())
   email             String   @unique
   first_name        String?
@@ -25,7 +26,7 @@ model user {
 }
 
 model payments {
-  id               Int      @id @default(autoincrement())
+  id               String   @id @default(uuid())
   created_time     DateTime @default(now())
   stripe_id        String
   email            String
@@ -39,7 +40,7 @@ model payments {
 }
 
 model subscriptions {
-  id                        Int      @id @default(autoincrement())
+  id                        String   @id @default(uuid())
   created_time              DateTime @default(now())
   subscription_id           String
   stripe_user_id            String
@@ -53,7 +54,7 @@ model subscriptions {
 }
 
 model subscriptions_plans {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @default(uuid())
   created_time DateTime @default(now())
   plan_id      String
   name         String
@@ -64,7 +65,7 @@ model subscriptions_plans {
 }
 
 model invoices {
-  id              Int      @id @default(autoincrement())
+  id              String @id @default(uuid())
   created_time    DateTime @default(now())
   invoice_id      String
   subscription_id String
