@@ -1,23 +1,17 @@
 import { ContentLayout } from '@/components/dashboard-panel/content-layout'
-import Heading from '@/components/global/heading'
-import { dateFormat } from '@/utils/format'
 import React from 'react'
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+import Summar from './components/summary'
 
-const Home = () => {
-  const user = {
-    firstName: "John",
-    lastName: "Doe"
+const Home = async () => {
+  const { userId } = await auth()
+  if (!userId) {
+    redirect('/')
   }
-  console.log(user.firstName?.charAt(0)?.toUpperCase())
   return (
     <ContentLayout>
-      {/* ---------------------------header--------------------------- */}
-      <div className="mb-6 ">
-        <Heading
-          title={`Welcome back ${user.firstName?.charAt(0)?.toUpperCase()}${user.firstName?.slice(1)}!`}
-          description={`Take a look your learning progress for Today ${dateFormat(new Date(), "dd MMMM yyyy")}`}
-        />
-      </div>
+      <Summar />
     </ContentLayout>
   )
 }
