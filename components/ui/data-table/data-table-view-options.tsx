@@ -1,91 +1,59 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import type { Table } from "@tanstack/react-table"
-import { Check, ChevronsUpDown, Settings2 } from "lucide-react"
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { type Table } from "@tanstack/react-table";
 
-import { cn, toSentenceCase } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Settings2 } from "lucide-react";
 
 interface DataTableViewOptionsProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
-  const triggerRef = React.useRef<HTMLButtonElement>(null)
-
   return (
-    <Popover modal>
-      <PopoverTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button
-          ref={triggerRef}
-          aria-label="Toggle columns"
-          variant="outline"
-          role="combobox"
-          size="sm"
-          className="ml-auto hidden h-8 gap-2 focus:outline-none focus:ring-1 focus:ring-ring focus-visible:ring-0 lg:flex"
+          variant='outline'
+          size='sm'
+          className='ml-auto hidden h-8 lg:flex'
         >
-          <Settings2 className="size-4" />
+          <Settings2 className='mr-2 h-4 w-4' />
           View
-          <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
         </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        align="end"
-        className="w-44 p-0"
-        onCloseAutoFocus={() => triggerRef.current?.focus()}
-      >
-        <Command>
-          <CommandInput placeholder="Search columns..." />
-          <CommandList>
-            <CommandEmpty>No columns found.</CommandEmpty>
-            <CommandGroup>
-              {table
-                .getAllColumns()
-                .filter(
-                  (column) =>
-                    typeof column.accessorFn !== "undefined" &&
-                    column.getCanHide()
-                )
-                .map((column) => {
-                  return (
-                    <CommandItem
-                      key={column.id}
-                      onSelect={() =>
-                        column.toggleVisibility(!column.getIsVisible())
-                      }
-                    >
-                      <span className="truncate">
-                        {toSentenceCase(column.id)}
-                      </span>
-                      <Check
-                        className={cn(
-                          "ml-auto size-4 shrink-0",
-                          column.getIsVisible() ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                    </CommandItem>
-                  )
-                })}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  )
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align='end' className='w-[150px]'>
+        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {table
+          .getAllColumns()
+          .filter(
+            (column) =>
+              typeof column.accessorFn !== "undefined" && column.getCanHide()
+          )
+          .map((column) => {
+            return (
+              <DropdownMenuCheckboxItem
+                key={column.id}
+                className='capitalize'
+                checked={column.getIsVisible()}
+                onCheckedChange={(value) => column.toggleVisibility(!!value)}
+              >
+                {column.id}
+              </DropdownMenuCheckboxItem>
+            );
+          })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }
