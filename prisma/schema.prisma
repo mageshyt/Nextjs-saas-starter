@@ -3,9 +3,8 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -13,66 +12,118 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELED
+  PAST_DUE
+}
+
+enum InvoiceStatus {
+  PAID
+  UNPAID
+  VOID
+  PENDING
+}
+
+enum Interval {
+  MONTHLY
+  YEARLY
+}
+
+model User {
   id                String   @id @default(uuid())
   created_time      DateTime @default(now())
+  updated_time      DateTime @updatedAt
   email             String   @unique
+  role              Role     @default(USER)
   first_name        String?
   last_name         String?
-  gender            String?
   profile_image_url String?
   user_id           String   @unique
   subscription      String?
+
+  // Relations
+  payments      Payment[]
+  subscriptions Subscription[]
+  invoices      Invoice[]
 }
 
-model payments {
+model Payment {
   id               String   @id @default(uuid())
   created_time     DateTime @default(now())
   stripe_id        String
   email            String
-  amount           String
-  payment_time     String
-  payment_date     String
+  amount           Decimal
+  payment_time     DateTime
   currency         String
   user_id          String
   customer_details String
   payment_intent   String
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
 }
 
-model subscriptions {
-  id                        String   @id @default(uuid())
-  created_time              DateTime @default(now())
-  subscription_id           String
+model Subscription {
+  id                        String             @id @default(uuid())
+  created_time              DateTime           @default(now())
+  updated_time              DateTime           @updatedAt
+  subscription_id           String             @unique
   stripe_user_id            String
-  status                    String
-  start_date                String
-  end_date                  String?
+  status                    SubscriptionStatus @default(ACTIVE)
+  start_date                DateTime
+  end_date                  DateTime?
   plan_id                   String
   default_payment_method_id String?
   email                     String
   user_id                   String
+  // Relations
+  user                      User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  plan                      SubscriptionPlan?  @relation(fields: [plan_id], references: [id])
+  invoices                  Invoice[]
+
+  @@index([user_id])
+  @@index([plan_id])
 }
 
-model subscriptions_plans {
+model SubscriptionPlan {
   id           String   @id @default(uuid())
   created_time DateTime @default(now())
-  plan_id      String
   name         String
-  description  String
-  amount       String
+  description  String?
+  amount       Decimal
   currency     String
-  interval     String
+  interval     Interval
+
+  // Relations
+  subscriptions Subscription[]
 }
 
-model invoices {
-  id              String @id @default(uuid())
-  created_time    DateTime @default(now())
-  invoice_id      String
+model Invoice {
+  id              String        @id @default(uuid())
+  created_time    DateTime      @default(now())
+  invoice_id      String        @unique
   subscription_id String
-  amount_paid     String
-  amount_due      String?
+  amount_paid     Decimal
+  amount_due      Decimal?
   currency        String
-  status          String
+  status          InvoiceStatus @default(PENDING)
   email           String
   user_id         String?
+
+  // Relations
+  subscription Subscription @relation(fields: [subscription_id], references: [id], onDelete: Cascade)
+  user         User?        @relation(fields: [user_id], references: [id], onDelete: SetNull)
+
+  @@unique([invoice_id, subscription_id])
+  @@index([subscription_id])
+  @@index([user_id])
 }
