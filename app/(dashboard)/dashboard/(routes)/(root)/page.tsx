@@ -3,6 +3,8 @@ import React from 'react'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import Summar from './components/summary'
+import { SaleHistory } from './components/sale-history'
+import { TopSelling } from './components/top-selling'
 
 const Home = async () => {
   const { userId } = await auth()
@@ -10,8 +12,21 @@ const Home = async () => {
     redirect('/')
   }
   return (
-    <ContentLayout>
+    <ContentLayout className='space-y-6'>
       <Summar />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <SaleHistory />
+        <TopSelling products={[
+          { productName: "Product A", earnings: 1200 },
+          { productName: "Product B", earnings: 3250 },
+          { productName: "Product C", earnings: 870 },
+          { productName: "Product D", earnings: 800 },
+          { productName: "Product E", earnings: 750 },
+          { productName: "Product M", earnings: 200 },
+          { productName: "Product K", earnings: 500 },
+        ]} />
+      </div>
     </ContentLayout>
   )
 }
