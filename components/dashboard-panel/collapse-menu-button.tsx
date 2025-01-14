@@ -109,7 +109,7 @@ export function CollapseMenuButton({
             style={{
               borderLeft: "1.9px dashed #ccc", // Dashed border on the left
               marginLeft: "30px", // Adjust to align with parent item
-              paddingLeft: "10px", // Ensure spacing from the border
+              paddingLeft: "1px", // Ensure spacing from the border
             }}
           >
             <Button
