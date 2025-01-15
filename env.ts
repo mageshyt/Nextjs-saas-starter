@@ -9,10 +9,13 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string(),
     CLERK_SECRET_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
+    BASE_URL: z.string(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string(),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
+    NEXT_PUBLIC_STRIPE_PRICE_ID_BASIC: z.string(),
+    NEXT_PUBLIC_STRIPE_PRICE_ID_PRO: z.string(),
   },
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
   runtimeEnv: {
@@ -23,5 +26,8 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_STRIPE_PRICE_ID_BASIC: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_BASIC,
+    NEXT_PUBLIC_STRIPE_PRICE_ID_PRO: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO,
+    BASE_URL: process.env.BASE_URL,
   },
 });
