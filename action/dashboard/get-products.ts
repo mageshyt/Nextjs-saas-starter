@@ -1,5 +1,6 @@
 "use server";
 
+import { ITEMS_PER_PAGE } from "@/lib/constants";
 import { Product, ProductLabel, ProductPriority, ProductStatus } from "@/types";
 
 export const getProducts = async () => {
@@ -72,7 +73,12 @@ export const getProducts = async () => {
         updatedAt: new Date("2023-12-10T08:30:00Z"),
       },
     ];
-    return dummyData;
+
+
+    return {
+      totalPage: dummyData.length/ITEMS_PER_PAGE,
+      data: dummyData,
+    }
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;

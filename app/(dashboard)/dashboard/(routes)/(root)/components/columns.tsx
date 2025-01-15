@@ -1,9 +1,8 @@
 "use client"
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Product, ProductStatus } from "@/types";
+import { Product } from "@/types";
 import { ColumnDef } from "@tanstack/react-table"
-
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -19,12 +18,14 @@ export const columns: ColumnDef<Product>[] = [
       />
     ),
     cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
-        className="ml-2"
       />
+      </div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -32,7 +33,7 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "code",
     header: "Code",
-    cell: ({ row }) => <div>{row.original.code}</div>,
+    cell: ({ row }) => <div className="font-semibold">{row.original.code}</div>,
   },
   {
     accessorKey: "title",
@@ -42,35 +43,22 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => {
-      const status = row.original.status as ProductStatus
-      return <Badge variant={status}>{status}</Badge>
-    }
+    cell: ({ row }) => (
+      <Badge variant={row.original.status}>{row.original.status}</Badge>
+    ),
   },
   {
     accessorKey: "label",
     header: "Label",
-    cell: ({ row }) => <div>{row.original.label}</div>,
+    cell: ({ row }) => (
+      <Badge variant={row.original.label}>{row.original.label}</Badge>
+    ),
   },
   {
     accessorKey: "priority",
     header: "Priority",
-    cell: ({ row }) => <div>{row.original.priority}</div>,
+    cell: ({ row }) => (
+      <Badge variant={row.original.priority}>{row.original.priority}</Badge>
+    ),
   },
-  {
-    accessorKey: "archived",
-    header: "Archived",
-    cell: ({ row }) => <div>{row.original.archived ? "Yes" : "No"}</div>,
-  },
-  {
-    accessorKey: "createdAt",
-    header: "Created At",
-    cell: ({ row }) => <div>{row.original.createdAt.toISOString()}</div>,
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "Updated At",
-    cell: ({ row }) => <div>{row.original.updatedAt.toISOString()}</div>,
-  }
-
-]
+];
