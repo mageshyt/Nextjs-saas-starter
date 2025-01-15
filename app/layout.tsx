@@ -48,25 +48,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthWrapper>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
 
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <QueryProvider >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProvider >
+            <AuthWrapper>
               <ToastProvider />
               {children}
-            </QueryProvider>
-          </ThemeProvider>
-        </body>
-      </html >
-    </AuthWrapper>
+            </AuthWrapper>
+          </QueryProvider>
+        </ThemeProvider>
+      </body>
+    </html >
   );
 }
