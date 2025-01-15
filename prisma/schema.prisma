@@ -17,13 +17,6 @@ enum Role {
   ADMIN
 }
 
-enum SubscriptionStatus {
-  ACTIVE
-  INACTIVE
-  CANCELED
-  PAST_DUE
-}
-
 enum InvoiceStatus {
   PAID
   UNPAID
@@ -73,21 +66,21 @@ model Payment {
 }
 
 model Subscription {
-  id                        String             @id @default(uuid())
-  created_time              DateTime           @default(now())
-  updated_time              DateTime           @updatedAt
-  subscription_id           String             @unique
+  id                        String            @id @default(uuid())
+  created_time              DateTime          @default(now())
+  updated_time              DateTime          @updatedAt
+  subscription_id           String            @unique
   stripe_user_id            String
-  status                    SubscriptionStatus @default(ACTIVE)
+  status                    String
   start_date                DateTime
   end_date                  DateTime?
-  plan_id                   String
   default_payment_method_id String?
   email                     String
   user_id                   String
+  plan_id                   String
   // Relations
-  user                      User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  plan                      SubscriptionPlan?  @relation(fields: [plan_id], references: [id])
+  user                      User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  plan                      SubscriptionPlan? @relation(fields: [plan_id], references: [id])
   invoices                  Invoice[]
 
   @@index([user_id])
@@ -95,16 +88,20 @@ model Subscription {
 }
 
 model SubscriptionPlan {
-  id           String   @id @default(uuid())
-  created_time DateTime @default(now())
-  name         String
-  description  String?
-  amount       Decimal
-  currency     String
-  interval     Interval
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  amount      Decimal
+  currency    String
+  interval    Interval
+
+  plan_id     String? @unique
 
   // Relations
   subscriptions Subscription[]
+
+  created_time DateTime @default(now())
+  updated_time DateTime @updatedAt @default(now())
 }
 
 model Invoice {
