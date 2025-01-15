@@ -1,13 +1,12 @@
 import { cn } from "@/lib/utils";
 
-
 interface DottedSeparatorProps {
   className?: string;
   color?: string;
   height?: string;
   dotSize?: string;
   gap?: string;
-  deirection?: "horizontal" | "vertical";
+  direction?: "horizontal" | "vertical";
 }
 
 export const DottedSeparator = ({
@@ -16,9 +15,9 @@ export const DottedSeparator = ({
   height = "2px",
   dotSize = "2px",
   gap = "4px",
-  deirection = "horizontal",
+  direction = "horizontal",
 }: DottedSeparatorProps) => {
-  const isHorizontal = deirection === "horizontal";
+  const isHorizontal = direction === "horizontal";
 
   return (
     <div
@@ -27,7 +26,8 @@ export const DottedSeparator = ({
         className
       )}
     >
-      <div className={isHorizontal ? "flex-grow" : "flex-grow-0"}
+      <div
+        className={isHorizontal ? "flex-grow" : "flex-grow-0"}
         style={{
           width: isHorizontal ? '100%' : height,
           height: isHorizontal ? height : '100%',
@@ -35,10 +35,8 @@ export const DottedSeparator = ({
           backgroundRepeat: isHorizontal ? 'repeat-x' : 'repeat-y',
           backgroundPosition: "center",
           backgroundSize: isHorizontal ? `${parseInt(dotSize) + parseInt(gap)}px ${height}` : `${height} ${parseInt(dotSize) + parseInt(gap)}px`,
-
         }}
       />
-    </div >
-  )
-
-}
+    </div>
+  );
+};
