@@ -20,7 +20,7 @@ async function handler(request: Request) {
     "svix-timestamp": headersList.get("svix-timestamp"),
     "svix-signature": headersList.get("svix-signature"),
   };
-  console.log("[WEB HOOK]", webhookSecret);
+  console.log("[CREATE USER]", payload);
   const wh = new Webhook(webhookSecret);
   let evt: Event | null = null;
 
@@ -36,6 +36,8 @@ async function handler(request: Request) {
 
   const eventType: EventType = evt.type;
 
+  console.log("[CREATE USER] EVENT", eventType);
+
   switch (eventType) {
     case "user.created": {
       await CreateOrUpdateUser({
@@ -49,12 +51,13 @@ async function handler(request: Request) {
       return NextResponse.json({ message: "User created" });
     }
     case "user.updated": {
+      const { data } = payload;
       await CreateOrUpdateUser({
-        email: payload?.data?.email_addresses?.[0]?.email_address,
-        first_name: payload?.data?.first_name,
-        last_name: payload?.data?.last_name,
-        profile_image_url: payload?.data?.profile_image_url,
-        user_id: payload?.data?.id,
+        email: data?.email_addresses?.[0]?.email_address,
+        first_name: data?.first_name,
+        last_name: data?.last_name,
+        profile_image_url: data?.profile_image_url,
+        user_id: data?.id,
       })
       return NextResponse.json({ message: "User updated" });
     }
