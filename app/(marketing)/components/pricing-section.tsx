@@ -1,7 +1,12 @@
 'use client';
 
+import { useUser } from '@clerk/nextjs';
+import { toast } from 'sonner';
+
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+
+import { useSubscription } from '@/hooks/use-subscription';
 
 import ListView from '@/components/global/list-view';
 import LampPricing from '@/components/ui/lamp-pricing';
@@ -10,15 +15,26 @@ import { Switch } from '@/components/ui/switch';
 import PricingCard from './pricing-card';
 import { plans } from '@/data/plants';
 
+
 const PricingSection = () => {
   const ref = useRef(null);
   const isInview = useInView(ref, { once: true, amount: 0.7 });
+  const { onSubscribe, isProcessing, priceId } = useSubscription();
 
+  const { user } = useUser();
 
   const [isYearly, setIsYearly] = useState(false);
 
-  const onSubscribeClick = async (userId: string, priceId: string) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay
+  const onSubscribeClick = async (priceId: string) => {
+    if (!user) {
+      return;
+    }
+
+    try {
+      await onSubscribe({ priceId });
+    } catch (error) {
+      toast.error("Subscription failed. Please try again.");
+    }
   };
 
 
@@ -56,12 +72,13 @@ const PricingSection = () => {
               <PricingCard
                 key={index}
                 {...plan}
+                user={user || null}
                 isYearly={isYearly}
                 exclusive={plan.exclusive}
                 popular={plan.popular}
                 handleCheckout={onSubscribeClick}
-                priceIdMonthly='priceIdMonthly'
-                priceIdYearly='priceIdYearly'
+                isLoading={isProcessing}
+                selectedPriceId={priceId}
               />
             )}
           />

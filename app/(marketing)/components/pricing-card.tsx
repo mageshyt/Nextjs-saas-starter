@@ -4,13 +4,13 @@ import React from "react"
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 type PricingCardProps = {
-  user ? : {id: string};
-  handleCheckout: (userId: string, priceId: string) => Promise<void> 
+  user?: any;
+  handleCheckout: (priceId: string) => Promise<void>
   priceIdMonthly: string
   priceIdYearly: string
   isYearly?: boolean
@@ -22,8 +22,10 @@ type PricingCardProps = {
   actionLabel: string
   popular?: boolean
   exclusive?: boolean
+  isLoading: boolean
+  selectedPriceId: string | null
 }
-const PricingCard = ({ user, handleCheckout, isYearly, title, priceIdMonthly, priceIdYearly, monthlyPrice, yearlyPrice, description, features, actionLabel, popular, exclusive }: PricingCardProps) => {
+const PricingCard = ({ user, handleCheckout, isYearly, title, priceIdMonthly, priceIdYearly, monthlyPrice, yearlyPrice, description, features, actionLabel, popular, exclusive, isLoading, selectedPriceId }: PricingCardProps) => {
   const router = useRouter();
   return (
     <Card
@@ -60,9 +62,10 @@ const PricingCard = ({ user, handleCheckout, isYearly, title, priceIdMonthly, pr
       </div>
       <CardFooter className="mt-2">
         <Button
+          disabled={isLoading}
           onClick={() => {
             if (user?.id) {
-              handleCheckout(user?.id, isYearly ? priceIdYearly : priceIdMonthly)
+              handleCheckout(isYearly ? priceIdYearly : priceIdMonthly)
             } else {
               toast("Please login or sign up to purchase", {
                 description: "You must be logged in to make a purchase",
@@ -79,7 +82,12 @@ const PricingCard = ({ user, handleCheckout, isYearly, title, priceIdMonthly, pr
           type="button"
         >
           <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b fr om-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
-          {actionLabel}
+          {
+            isLoading && selectedPriceId === (isYearly ? priceIdYearly : priceIdMonthly)
+              ? <Loader2 className="h-6 w-6 text-black animate-spin" /> : <CreditCard className="size-6 text-black" />
+          }
+
+          <span className="ml-2">{actionLabel}</span>
         </Button>
       </CardFooter>
     </Card>
