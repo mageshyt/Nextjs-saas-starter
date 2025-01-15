@@ -5,7 +5,7 @@ import { Product, ProductLabel, ProductPriority, ProductStatus } from "@/types";
 
 export const getProducts = async () => {
   try {
-    const dummyData: Product[] = [
+    const baseData: Product[] = [
       {
         id: "task-1",
         code: "TASK001",
@@ -76,9 +76,9 @@ export const getProducts = async () => {
 
 
     return {
-      totalPage: dummyData.length/ITEMS_PER_PAGE,
-      data: dummyData,
-    }
+      totalPage: Math.ceil(baseData.length / ITEMS_PER_PAGE),
+      data: baseData,
+    };
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;
