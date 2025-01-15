@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import Summar from './components/summary'
 import { SaleHistory } from './components/sale-history'
 import { TopSelling } from './components/top-selling'
+import RecentOrder from './components/recent-order'
 
 const Home = async () => {
   const { userId } = await auth()
@@ -13,7 +14,10 @@ const Home = async () => {
   }
   return (
     <ContentLayout className='space-y-6'>
+      {/* Summar */}
       <Summar />
+
+      {/* Sale History and Top Selling */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <SaleHistory />
@@ -27,6 +31,9 @@ const Home = async () => {
           { productName: "Product K", earnings: 500 },
         ]} />
       </div>
+
+      {/* Recent Orders */}
+      <RecentOrder/>
     </ContentLayout>
   )
 }
