@@ -1,7 +1,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
-import { ProductStatus } from "@/types"
+import { ProductLabel, ProductPriority, ProductStatus } from "@/types"
 
 
 
@@ -19,10 +19,19 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
         outline: "text-foreground",
-        [ProductStatus.todo] : "border-transparent bg-sky-400 text-primary-foreground shadow hover:bg-sky-400/80",
-        [ProductStatus.done] : "border-transparent bg-emerald-400 text-primary-foreground shadow hover:bg-emerald-400/80",
-        [ProductStatus.inProgress] : "border-transparent bg-pink-400 text-primary-foreground shadow hover:bg-pink-400/80",
-        [ProductStatus.canceled] : "border-transparent bg-rose-400 text-primary-foreground shadow hover:bg-rose-400/80",
+        [ProductStatus.todo]: "bg-yellow-100 text-yellow-800",
+        [ProductStatus.inProgress]: "bg-blue-100 text-blue-800",
+        [ProductStatus.done]: "bg-green-100 text-green-800",
+        [ProductStatus.canceled]: "bg-gray-100 text-gray-800",
+
+        [ProductLabel.bug]: "bg-purple-100 text-purple-800",
+        [ProductLabel.feature]: "bg-purple-100 text-purple-800",
+        [ProductLabel.documentation]: "bg-purple-100 text-purple-800",
+        [ProductLabel.enhancement]: "bg-purple-100 text-purple-800",
+
+        [ProductPriority.high]: "bg-red-100 text-red-800",
+        [ProductPriority.medium]: "bg-orange-100 text-orange-800",
+        [ProductPriority.low]: "bg-green-100 text-green-800",
       },
     },
     defaultVariants: {
