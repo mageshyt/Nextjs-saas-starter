@@ -9,7 +9,7 @@ export default function SignInPage() {
       {/* sign-in */}
       <div className="col-span-2 h-full flex-col items-center justify-center px-4 lg:flex">
         <div className="space-y-4 pt-16 text-center">
-          <h1 className="text-muted-[#2E2A47] text-3xl font-bold dark:text-white">
+          <h1 className="text-zinc-900 text-3xl font-bold">
             Welcome to NestJs Starter Kit 🚀
           </h1>
           <p className="text-base  text-[#7E8CA0]">
