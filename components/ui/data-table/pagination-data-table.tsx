@@ -41,10 +41,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ITEMS_PER_PAGE } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 interface PaginationDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  // searchKey is the key of the data object that will be used for searching
   searchKey?: string;
   alignment?: 'align-top' | 'align-bottom' | 'align-middle';
   disabled?: boolean;
@@ -55,7 +57,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   searchKey = undefined,
-  itemPerPage= ITEMS_PER_PAGE,
+  itemPerPage = ITEMS_PER_PAGE,
   alignment = "align-middle",
   disabled = false,
   pageSizeOptions = [10, 20, 30, 40, 50],
@@ -135,7 +137,7 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className={alignment}>
+                    <TableCell key={cell.id} className={cn(alignment,"p-3 ")}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
