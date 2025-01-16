@@ -14,6 +14,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not authenticated" }, { status: 401 });
     }
 
+    console.log("Creating checkout session for user:", user.user_id);
+    console.log("Price ID:", priceId);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "subscription",
@@ -23,13 +26,21 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      metadata:{
+      metadata: {
         user_id: user.user_id,
         email: user.email,
+        plan_id: priceId
       },
       customer_email: user.email,
       success_url: `${env.NEXT_PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${env.NEXT_PUBLIC_APP_URL}/cancel`,
+      subscription_data: {
+        metadata: {
+          user_id: user.user_id,
+          email: user.email,
+          plan_id: priceId
+        }
+      }
     });
 
     return NextResponse.json({

@@ -20,7 +20,6 @@ async function handler(request: Request) {
     "svix-timestamp": headersList.get("svix-timestamp"),
     "svix-signature": headersList.get("svix-signature"),
   };
-  console.log("[CREATE USER]", payload);
   const wh = new Webhook(webhookSecret);
   let evt: Event | null = null;
 
