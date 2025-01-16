@@ -29,46 +29,65 @@ enum Interval {
   YEARLY
 }
 
+enum SubscriptionType {
+  FREE
+  BASIC
+  PRO
+}
+
 model User {
-  id                String   @id @default(uuid())
-  created_time      DateTime @default(now())
-  updated_time      DateTime @updatedAt
-  email             String   @unique
-  role              Role     @default(USER)
+  id                String  @id @default(uuid())
+  email             String  @unique
+  role              Role    @default(USER)
   first_name        String?
   last_name         String?
   profile_image_url String?
-  user_id           String   @unique
-  subscription      String?
+  user_id           String  @unique
+  subscription      SubscriptionType  @default(FREE)
 
   // Relations
   payments      Payment[]
   subscriptions Subscription[]
   invoices      Invoice[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PaymentStatus {
+  SUCCEEDED
+  FAILED
+  PENDING
 }
 
 model Payment {
   id               String   @id @default(uuid())
-  created_time     DateTime @default(now())
   stripe_id        String
   email            String
   amount           Decimal
   payment_time     DateTime
   currency         String
   user_id          String
+  subscription_id  String
   customer_details String
   payment_intent   String
+  status           PaymentStatus @default(PENDING)
 
   // Relations
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  subscription Subscription @relation(fields: [subscription_id], references: [id], onDelete: Cascade)
+  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([user_id])
+  @@index([subscription_id])
+  @@unique([stripe_id, subscription_id])
 }
 
 model Subscription {
   id                        String            @id @default(uuid())
-  created_time              DateTime          @default(now())
-  updated_time              DateTime          @updatedAt
   subscription_id           String            @unique
   stripe_user_id            String
   status                    String
@@ -82,6 +101,10 @@ model Subscription {
   user                      User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
   plan                      SubscriptionPlan? @relation(fields: [plan_id], references: [id])
   invoices                  Invoice[]
+  payments                  Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([user_id])
   @@index([plan_id])
@@ -95,18 +118,17 @@ model SubscriptionPlan {
   currency    String
   interval    Interval
 
-  plan_id     String? @unique
+  plan_id String? @unique
 
   // Relations
   subscriptions Subscription[]
 
-  created_time DateTime @default(now())
-  updated_time DateTime @updatedAt @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Invoice {
   id              String        @id @default(uuid())
-  created_time    DateTime      @default(now())
   invoice_id      String        @unique
   subscription_id String
   amount_paid     Decimal
@@ -119,6 +141,9 @@ model Invoice {
   // Relations
   subscription Subscription @relation(fields: [subscription_id], references: [id], onDelete: Cascade)
   user         User?        @relation(fields: [user_id], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([invoice_id, subscription_id])
   @@index([subscription_id])
