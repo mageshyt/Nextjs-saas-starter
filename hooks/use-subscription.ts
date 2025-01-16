@@ -16,14 +16,16 @@ export const useSubscription = () => {
 
       if (response.status === 200) {
         window.location.href = response.data.session_url;
-      } else {
-        setIsProcessing(false);
       }
+
     } catch (error) {
       console.error("Subscription error:", error);
+    }
+    finally {
       setIsProcessing(false);
     }
+
   };
 
-  return { onSubscribe, isProcessing , priceId };
+  return { onSubscribe, isProcessing, priceId };
 };

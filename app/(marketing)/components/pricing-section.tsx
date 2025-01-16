@@ -18,7 +18,7 @@ import { plans } from '@/data/plants';
 
 const PricingSection = () => {
   const ref = useRef(null);
-  const isInview = useInView(ref, { once: true, amount: 0.7 });
+  const isInview = useInView(ref, { once: true, amount: 0.4 });
   const { onSubscribe, isProcessing, priceId } = useSubscription();
 
   const { user } = useUser();
@@ -26,20 +26,22 @@ const PricingSection = () => {
   const [isYearly, setIsYearly] = useState(false);
 
   const onSubscribeClick = async (priceId: string) => {
-    if (!user) {
-      return;
-    }
-
     try {
+      if (!user) {
+        return;
+      }
+      // NOTE: This is a custom function that we created in the useSubscription hook
       await onSubscribe({ priceId });
     } catch (error) {
+      console.error(error);
+
       toast.error("Subscription failed. Please try again.");
     }
   };
 
 
   return (
-    <section id="pricing" className="py-10 px-4" ref={ref}>
+    <section id="pricing" className="py-10 " ref={ref}>
       {/* Heading */}
       <LampPricing />
 
