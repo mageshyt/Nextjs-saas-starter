@@ -13,9 +13,11 @@ const Navbar = () => {
       <div className='flex h-[3rem] mx-4  items-center justify-between'>
 
         {/* Logo */}
-        <div className='relative size-6'>
-          <Image src='/logo.svg' fill className='object-cover' alt='logo' />
-        </div>
+        <Link href='/'>
+          <div className='relative size-6'>
+            <Image src='/logo.svg' fill className='object-cover' alt='logo' />
+          </div>
+        </Link>
 
         {/* Navigation - Login  */}
         <div className='ml-auto gap-6 flex h-full items-center'>
