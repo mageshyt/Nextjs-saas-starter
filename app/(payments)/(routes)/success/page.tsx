@@ -9,7 +9,7 @@ export default async function SuccessPage({ searchParams }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   // NOTE : you can use this sesstion to veriy the payment
-  const session = await stripe.checkout.sessions.retrieve(searchParams?.session_id as string);
+//  const session = await stripe.checkout.sessions.retrieve(searchParams?.session_id as string);
   return (
     <main className="flex min-w-screen flex-col  items-center justify-between">
       <Navbar />
