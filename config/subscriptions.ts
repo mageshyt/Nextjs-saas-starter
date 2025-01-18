@@ -1,7 +1,7 @@
 import { env } from "@/env";
 
 
-export const subscriptions= [
+export const subscriptionPlans= [
   {
     title: "Basic",
     monthlyPrice: 10,

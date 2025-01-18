@@ -1,4 +1,4 @@
-import { subscriptions } from "@/config/subscriptions";
+import { subscriptionPlans } from "@/config/subscriptions";
 import { env } from "@/env";
 import { db } from "@/lib/db";
 import { getUserById } from "@/lib/user";
@@ -93,7 +93,7 @@ async function handleSubscriptionEvent(
       case "deleted":
         await db.subscription.update({
           where: { subscription_id: subscription.id },
-          data: { status: "deleted" },
+          data: { status: "canceled" },
         });
 
         return NextResponse.json({ status: 200, message: "Subscription deleted" });
@@ -102,7 +102,9 @@ async function handleSubscriptionEvent(
         return NextResponse.json({ status: 400, error: "Invalid event type" });
     }
   } catch (error) {
-    console.error("Error handling subscription event:", error);
+    if (error instanceof Error){
+      console.log("Error: ", error.stack)
+  }
     return NextResponse.json({ status: 500, error: "Internal Server Error" });
   }
 }
@@ -110,14 +112,28 @@ async function handleSubscriptionEvent(
 async function handleCreatedSubscription(subscriptionData: any, plan: any, subscription: any, currentuser: any) {
   console.log("Creating subscription for user:", subscriptionData.user_id);
 
-  const newSubscription = await db.subscription.create({
-    data: { ...subscriptionData, plan_id: plan.id },
+  const newSubscription = await db.subscription.upsert({
+    where: { user_id: currentuser.id },
+    create: { ...subscriptionData, plan_id: plan.id },
+    update: { ...subscriptionData, plan_id: plan.id },
   });
 
   console.log("Subscription created:", newSubscription);
 
-  await db.payment.create({
-    data: {
+  await db.payment.upsert({
+    where: { stripe_id_subscription_id: { stripe_id: subscription.customer.toString(), subscription_id: newSubscription.id } }, 
+    update:{
+      stripe_id: subscription.customer.toString(),
+      email: subscriptionData.email,
+      subscription_id: newSubscription.id,
+      amount: plan.amount.toDecimalPlaces(2).toString(),
+      currency: plan.currency,
+      customer_details: JSON.stringify(subscription.metadata),
+      payment_time: new Date(subscription.created * 1000).toISOString(),
+      payment_intent: subscription.latest_invoice?.toString() || "",
+      user_id: currentuser.id, 
+    },
+    create: {
       stripe_id: subscription.customer.toString(),
       email: subscriptionData.email,
       subscription_id: newSubscription.id,
@@ -179,6 +195,8 @@ async function handleInvoiceEvent(
 
     if (type === "payment_succeeded") {
       await handlePaymentSucceeded(currentSubscription, plan_id, currentuser);
+
+      return NextResponse.json({ status: 200, message: "Invoice payment succeeded" });
     } else {
       await db.payment.update({
         where: {
@@ -193,7 +211,9 @@ async function handleInvoiceEvent(
       return NextResponse.json({ status: 200, message: "Invoice payment failed" });
     }
   } catch (error) {
-    console.error("Error handling invoice event:", error);
+    if (error instanceof Error){
+      console.log("Error: ", error.stack)
+  }
     return NextResponse.json({ status: 500, error: "Internal Server Error" });
   }
 }
@@ -210,10 +230,11 @@ async function handlePaymentSucceeded(currentSubscription: Subscription, plan_id
   });
 
   const userPlan =
-    subscriptions.find((plan) => plan.priceIdMonthly === plan_id) ||
-    subscriptions.find((plan) => plan.priceIdYearly === plan_id);
+    subscriptionPlans.find((plan) => plan.priceIdMonthly === plan_id) ||
+    subscriptionPlans.find((plan) => plan.priceIdYearly === plan_id);
 
-  const plan = userPlan?.title === "Basic" ? "BASIC" : "PRO";
+  console.log("User plan:", userPlan);
+  const plan = userPlan?.title.includes("Basic") ? "BASIC" : "PRO";
 
   await db.user.update({
     where: { id: currentuser.id },
