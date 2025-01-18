@@ -1,8 +1,7 @@
-import { getUserById } from "@/action/user/get-user";
+import { subscriptions } from "@/config/subscriptions";
 import { env } from "@/env";
-import { currentProfilePage } from "@/lib/current-user-page";
 import { db } from "@/lib/db";
-import { auth, getAuth } from "@clerk/nextjs/server";
+import { getUserById } from "@/lib/user";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -55,12 +54,18 @@ async function handleSubscriptionEvent(
 ) {
   try {
     const subscription = event.data.object as Stripe.Subscription;
+    console.log("Subscription event:", subscription);
     const { user_id, email, plan_id } = subscription.metadata;
 
+    if (!user_id || !email || !plan_id) {
+
+      return NextResponse.json({
+        status: 400,
+        error: "Invalid subscription metadata",
+      })
+    }
+
     const currentuser = await getUserById(user_id);
-
-
-    console.log("Subscription event received:", type, user_id, email, plan_id);
 
     if (!currentuser) {
       return NextResponse.json({
@@ -69,18 +74,12 @@ async function handleSubscriptionEvent(
       })
     }
 
-    if (!user_id || !email || !plan_id) {
-      return NextResponse.json({
-        status: 400,
-        error: "Invalid subscription metadata",
-      });
-    }
-
     const subscriptionData = {
       subscription_id: subscription.id,
       stripe_user_id: subscription.customer.toString(),
       status: subscription.status,
       start_date: new Date(subscription.created * 1000).toISOString(),
+      end_date: new Date(subscription.current_period_end * 1000).toISOString(),
       user_id: currentuser.id,
       email: email,
     }
@@ -108,20 +107,20 @@ async function handleSubscriptionEvent(
       case "created":
         console.log("Creating subscription for user:", user_id);
         // Save subscription data to database
-        const sub = await db.subscription.create({
+        const newSubscription = await db.subscription.create({
           data: {
             ...subscriptionData,
             plan_id: plan.id,
           }
         })
-        console.log("Subscription created:", sub);
+        console.log("Subscription created:", newSubscription);
 
         // create a payment record
         await db.payment.create({
           data: {
             stripe_id: subscription.customer.toString(),
             email: email,
-            subscription_id: sub.id,
+            subscription_id: newSubscription.id,
             amount: plan.amount.toDecimalPlaces(2).toString(),
             currency: plan.currency,
             customer_details: JSON.stringify(subscription.metadata),
@@ -130,8 +129,6 @@ async function handleSubscriptionEvent(
             user_id: currentuser.id,
           }
         })
-
-        console.log("Payment record created for subscription:", subscription.id);
 
         return NextResponse.json({
           status: 200,
@@ -195,7 +192,14 @@ async function handleInvoiceEvent(
 
   console.log("Invoice Subscription:", subscription.metadata);
 
-  const { user_id, email } = subscription.metadata;
+  const { user_id, email,plan_id } = subscription.metadata;
+
+  if (!user_id || !email) {
+    return NextResponse.json({
+      status: 400,
+      error: "Invalid subscription metadata",
+    })
+  }
 
 
   const currentuser = await getUserById(user_id);
@@ -248,8 +252,6 @@ async function handleInvoiceEvent(
   console.log("Invoice payment succeeded:", newInvoice);
   switch (type) {
     case "payment_succeeded":
-
-
       // update the payment record
       const updatedPayment = await db.payment.update({
         where: {
@@ -260,6 +262,20 @@ async function handleInvoiceEvent(
         },
         data: {
           status: "SUCCEEDED"
+        }
+      })
+      const userPlan = subscriptions.find(plan => plan.priceIdMonthly === plan_id)
+        || subscriptions.find(plan => plan.priceIdYearly === plan_id)
+
+      console.log("User Plan:", userPlan);
+      const plan = userPlan?.title === "Basic" ? "BASIC" : "PRO";
+      // update user subscription status
+      await db.user.update({
+        where: {
+          id: currentuser.id,
+        },
+        data: {
+          subscriptionPlan: plan
         }
       })
 

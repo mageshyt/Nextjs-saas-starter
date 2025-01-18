@@ -1,11 +1,16 @@
-import { env } from "@/env";
 import { NextRequest, NextResponse } from "next/server";
+import { env } from "@/env";
+
 import { currentProfilePage } from "@/lib/current-user-page";
+
 import { stripe } from "@/lib/stripe";
+import { absoluteUrl } from "@/lib/utils";
+import { getUserSubscription } from "@/lib/subscription";
 
-
+const dashboardUrl = absoluteUrl("/dashboard");
 
 export async function POST(req: NextRequest) {
+  let redirectUrl: string = "";
   try {
     const { priceId } = await req.json();
     const user = await currentProfilePage(req);
@@ -14,39 +19,54 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not authenticated" }, { status: 401 });
     }
 
-    console.log("Creating checkout session for user:", user.user_id);
-    console.log("Price ID:", priceId);
+    const userSubscription = await getUserSubscription(user.id);
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "subscription",
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      metadata: {
-        user_id: user.user_id,
-        email: user.email,
-        plan_id: priceId
-      },
-      customer_email: user.email,
-      success_url: `${env.NEXT_PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${env.NEXT_PUBLIC_APP_URL}/cancel`,
-      subscription_data: {
+    if (userSubscription?.isPaid && userSubscription?.stripe_user_id) {
+      // user on paid plan - redirect to billing portal
+      const stripePortalSession = await stripe.billingPortal.sessions.create({
+        customer: userSubscription.stripe_user_id,
+        return_url: dashboardUrl
+      });
+      redirectUrl = stripePortalSession.url;
+    }
+    else {
+      //user on free plan - create checkout session
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "subscription",
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
         metadata: {
-          user_id: user.user_id,
+          user_id: user.id,
           email: user.email,
           plan_id: priceId
+        },
+        customer: user.stripeCustomerId!,
+        success_url: `${env.NEXT_PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${env.NEXT_PUBLIC_APP_URL}/cancel`,
+        subscription_data: {
+          metadata: {
+            user_id: user.id,
+            email: user.email,
+            plan_id: priceId
+          }
         }
-      }
-    });
+      });
+
+      redirectUrl = session.url || "";
+    }
 
     return NextResponse.json({
       message: "Checkout session created",
-      session_url: session.url,
+      session_url: redirectUrl,
     });
+
+
   } catch (error) {
     console.error("Error creating checkout session:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
