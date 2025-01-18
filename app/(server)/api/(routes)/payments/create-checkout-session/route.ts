@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/env";
 
 import { currentProfilePage } from "@/lib/current-user-page";
-
 import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 import { getUserSubscription } from "@/lib/subscription";
@@ -20,18 +19,17 @@ export async function POST(req: NextRequest) {
     }
 
     const userSubscription = await getUserSubscription(user.id);
+    console.log("User subscription:", userSubscription);
 
-    if (userSubscription?.isPaid && userSubscription?.stripe_user_id) {
-      // user on paid plan - redirect to billing portal
+    if (userSubscription?.hasActiveSubscription && userSubscription?.stripe_user_id && !userSubscription?.isCancelled) {
+      // User on paid plan - redirect to billing portal
       const stripePortalSession = await stripe.billingPortal.sessions.create({
         customer: userSubscription.stripe_user_id,
         return_url: dashboardUrl
       });
       redirectUrl = stripePortalSession.url;
-    }
-    else {
-      //user on free plan - create checkout session
-
+    } else {
+      // User on free plan - create checkout session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "subscription",
@@ -65,7 +63,6 @@ export async function POST(req: NextRequest) {
       message: "Checkout session created",
       session_url: redirectUrl,
     });
-
 
   } catch (error) {
     console.error("Error creating checkout session:", error);
