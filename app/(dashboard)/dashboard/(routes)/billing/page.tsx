@@ -24,10 +24,6 @@ const page = async () => {
     redirect('/')
   }
   const userSubscription = await getUserSubscription(user.id)
-  if (!userSubscription) {
-    redirect('/pricing')
-  }
-  console.log(userSubscription)
   return (
     <ContentLayout className='space-y-6' >
 
@@ -54,8 +50,8 @@ const page = async () => {
             .
           </AlertDescription>
         </Alert>
-
-        <BillingInfo {...userSubscription} />
+        
+        <BillingInfo {...userSubscription!} />
       </div>
     </ContentLayout >
   )
