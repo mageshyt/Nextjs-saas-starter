@@ -34,8 +34,7 @@ model User {
   id                String           @id @default(uuid())
   email             String           @unique
   role              Role             @default(USER)
-  first_name        String?
-  last_name         String?
+  name              String?
   profile_image_url String?
   user_id           String           @unique
   subscriptionPlan     SubscriptionType @default(FREE)
