@@ -13,7 +13,7 @@ import LampPricing from '@/components/ui/lamp-pricing';
 import { Switch } from '@/components/ui/switch';
 
 import PricingCard from './pricing-card';
-import { plans } from '@/data/plants';
+import { subscriptions } from '@/config/subscriptions';
 
 
 const PricingSection = () => {
@@ -69,7 +69,7 @@ const PricingSection = () => {
 
         <div className="grid grid-cols-1 z-[100] gap-6 mt-6 sm:grid-cols-3">
           <ListView
-            items={plans}
+            items={subscriptions}
             render={(plan, index) => (
               <PricingCard
                 key={index}
