@@ -47,7 +47,6 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
           } else {
             toast.success(res?.success);
             router.refresh()
-            form.reset();
           }
         })
       }
@@ -63,13 +62,13 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
           title="Your Name"
           description="Please enter a display name you are comfortable with."
         >
-          <div className="flex gap-4 items-center flex-col md:flex-row">
+          <div className="flex gap-4 md:items-center flex-col md:flex-row items-end">
 
             <FormField
               name="name"
               control={form.control}
               render={({ field }) => (
-                <FormItem className="flex-1">
+                <FormItem className="flex-1 w-full">
                   <FormLabel className="sr-only">Name</FormLabel>
                   <FormControl>
                     <Input
@@ -87,7 +86,7 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
                 </FormItem>
               )}
             />
-            <div>
+            <div >
               <Button
                 type="submit"
                 disabled={!form.formState.isDirty || isPending}

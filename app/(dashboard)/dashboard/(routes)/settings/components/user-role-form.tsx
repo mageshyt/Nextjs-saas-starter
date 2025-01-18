@@ -42,7 +42,6 @@ export default function UserRoleForm({ user }: UserRoleFormProps) {
         } else {
           toast.success("Role updated successfully");
           router.refresh();
-          form.reset();
         }
       } catch {
         toast.error("Failed to update user role");
@@ -84,7 +83,7 @@ export default function UserRoleForm({ user }: UserRoleFormProps) {
               )}
             />
 
-            <Button className="w-[130px]"  type="submit" disabled={!form.formState.isDirty || isPending}>
+            <Button className="w-[130px]" type="submit" disabled={!form.formState.isDirty || isPending}>
               {isPending && <Loader2 className="size-4 mr-2 animate-spin" />} save role
             </Button>
           </div>
