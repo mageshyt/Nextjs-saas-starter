@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { CreditCard, Home,  LogOut, Settings } from "lucide-react";
+import { CreditCard, Home, LogOut, Settings } from "lucide-react";
 import { SignOutButton } from "@clerk/nextjs";
 import UserAvatar from "@/components/ui/user-avatar";
 import { truncate } from "@/lib/utils";
@@ -62,9 +62,11 @@ const UserProfile = async () => {
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="flex gap-x-2" disabled>
-            <CreditCard size={16} />
-            Billings & Subscription
+          <DropdownMenuItem className="flex gap-x-2" >
+            <Link href={"/dashboard/billing"} className="flex gap-x-2">
+              <CreditCard size={16} />
+              Billings & Subscription
+            </Link>
           </DropdownMenuItem>
 
           {/* logout */}

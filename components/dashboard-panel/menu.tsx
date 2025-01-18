@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { SignOutButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
-import { getMenuList } from "@/lib/menu-list";
+import { getMenuList } from "@/config/menu-list";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -63,7 +63,7 @@ export function Menu({ isOpen }: MenuProps) {
                             <Button
                               variant={
                                 (active === undefined &&
-                                  pathname.startsWith(href)) ||
+                                  pathname.endsWith(href)) ||
                                   active
                                   ? "secondary"
                                   : "ghost"
