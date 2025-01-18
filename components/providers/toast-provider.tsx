@@ -5,7 +5,7 @@ const ToastProvider = () => {
   return (
     <>
       <Toaster />
-      <SonnarToast />
+      <SonnarToast richColors closeButton />
     </>
   )
 }
