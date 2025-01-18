@@ -17,7 +17,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Starter Kit - Build Fast and Modern Apps",
+  title: {
+    template: "%s | Next.js Starter Kit",
+    default: "Next.js Starter Kit",
+  },
   description:
     "Kickstart your web development with our Next.js Starter Kit. Optimized for performance and scalability, it features pre-configured setups, best practices, and reusable components to streamline your workflow.",
   keywords: [

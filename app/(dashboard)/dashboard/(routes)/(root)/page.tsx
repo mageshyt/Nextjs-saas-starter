@@ -1,11 +1,19 @@
-import { ContentLayout } from '@/components/dashboard-panel/content-layout'
-import React from 'react'
-import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+
+import { auth } from '@clerk/nextjs/server'
+
 import Summar from './components/summary'
 import { SaleHistory } from './components/sale-history'
 import { TopSelling } from './components/top-selling'
 import RecentOrder from './components/recent-order'
+
+import { ContentLayout } from '@/components/dashboard-panel/content-layout'
+import { constructMetadata } from '@/lib/utils'
+
+export const metadata = constructMetadata({
+  title: "Dashboard",
+  description: "View your dashboard.",
+});
 
 const Home = async () => {
   const { userId } = await auth()
