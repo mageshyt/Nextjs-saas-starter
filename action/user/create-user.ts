@@ -22,7 +22,7 @@ export const CreateOrUpdateUser = async ({
 }: createUserInput) => {
   try {
 
-    let stripe_id= "";
+    let stripe_id = "";
 
     if (type == "CREATE") {
       const stripeAccount = await stripe.customers.create({
@@ -48,17 +48,15 @@ export const CreateOrUpdateUser = async ({
       where: { user_id },
       update: {
         email,
-        first_name,
-        last_name,
+        name: `${first_name} ${last_name ?? ""}`,
         profile_image_url,
       },
       create: {
         email,
-        first_name,
-        last_name,
+        name: `${first_name} ${last_name ?? ""}`,
         profile_image_url,
         user_id,
-        stripeCustomerId: stripe_id.toString(), 
+        stripeCustomerId: stripe_id.toString(),
       },
     });
 

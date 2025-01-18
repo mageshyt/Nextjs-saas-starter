@@ -20,7 +20,7 @@ const UserProfile = async () => {
     <div className="flex items-center space-x-2">
       {/* user name */}
       <div className="text-sm font-semibold sr-only  text-neutral-900 dark:text-neutral-100">
-        {truncate(user?.first_name || "", 18)}
+        {truncate(user?.name|| "", 18)}
       </div>
 
       <DropdownMenu>
@@ -30,7 +30,7 @@ const UserProfile = async () => {
             <UserAvatar
               alt="User Avatar"
               imageUrl={user?.profile_image_url || ""}
-              fallback={user?.first_name?.slice(0, 1) || "T"}
+              fallback={user?.name?.slice(0, 1) || "T"}
               className="w-10 h-10 cursor-pointer "
             />
           </div>
@@ -39,7 +39,7 @@ const UserProfile = async () => {
           <DropdownMenuLabel>
             {/* user name and email */}
             <div className="text-sm  font-semibold text-neutral-900 dark:text-neutral-100 truncate">
-              {user?.first_name}
+              {user?.name}
             </div>
 
             <div className="text-xs text-neutral-500 dark:text-neutral-400">
