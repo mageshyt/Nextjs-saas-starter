@@ -45,6 +45,7 @@ async function handler(request: Request) {
         last_name: payload?.data?.last_name,
         profile_image_url: payload?.data?.profile_image_url,
         user_id: payload?.data?.id,
+        type: "CREATE"
       })
 
       return NextResponse.json({ message: "User created" });
@@ -57,6 +58,7 @@ async function handler(request: Request) {
         last_name: data?.last_name,
         profile_image_url: data?.profile_image_url,
         user_id: data?.id,
+        type: "UPDATE"
       })
       return NextResponse.json({ message: "User updated" });
     }
