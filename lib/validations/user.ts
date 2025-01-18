@@ -10,3 +10,5 @@ export type userNameType = z.infer<typeof userNameSchema>;
 export const userRoleSchema = z.object({
   role: z.nativeEnum(Role),
 });
+
+export type userRoleType = z.infer<typeof userRoleSchema>;

@@ -1,6 +1,6 @@
 "use client";
 
-import {  useTransition } from "react";
+import { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -40,14 +40,20 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
 
   const onSubmit = form.handleSubmit((data) => {
     startTransition(async () => {
-      await updateUserName({ data }).then((res) => {
-        if (res?.error) {
-          toast.error(res?.error);
-        } else {
-          toast.success(res?.success);
-          router.refresh()
-        }
-      })
+      try {
+        await updateUserName({ data }).then((res) => {
+          if (res?.error) {
+            toast.error(res?.error);
+          } else {
+            toast.success(res?.success);
+            router.refresh()
+            form.reset();
+          }
+        })
+      }
+      catch {
+        toast.error("Failed to update user name");
+      }
     });
   });;
   return (
@@ -87,11 +93,11 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
                 disabled={!form.formState.isDirty || isPending}
                 className="w-[130px]"
               >
-                {isPending ? (
+                {isPending && (
                   <Loader2 className="size-4 animate-spin" />
-                ) : (
-                  "Save Changes"
-                )}
+                )
+                }
+                save name
               </Button>
             </div>
           </div>
