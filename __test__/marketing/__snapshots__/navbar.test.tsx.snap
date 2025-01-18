@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Navbar > matches the snapshot when user is signed in 1`] = `
+<div>
+  <header
+    class="fixed top-0 left-0 z-50 w-full animate-fade-in opacity-0 border-b p-2  backdrop-blur-[12px] [--animation-delay:600ms]"
+  >
+    <div
+      class="flex h-[3rem] mx-4  items-center justify-between"
+    >
+      <a
+        href="/"
+      >
+        <div
+          class="relative size-6"
+        >
+          <img
+            alt="logo"
+            class="object-cover"
+            data-nimg="fill"
+            decoding="async"
+            loading="lazy"
+            src="/logo.svg"
+            style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+          />
+        </div>
+      </a>
+      <div
+        class="ml-auto gap-6 flex h-full items-center"
+      >
+        <a
+          class="relative inline-flex h-10 overflow-hidden rounded-full p-[2px] focus:outline-none  "
+          href="/dashboard"
+        >
+          <span
+            class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]"
+          />
+          <span
+            class="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl"
+          >
+            Dashboard
+          </span>
+        </a>
+        <button>
+          Mocked UserButton
+        </button>
+      </div>
+    </div>
+  </header>
+</div>
+`;

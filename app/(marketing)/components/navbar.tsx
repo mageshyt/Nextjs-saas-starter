@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const Navbar = () => {
-  const user = useUser().isSignedIn;
+  const user = useUser()?.isSignedIn ;
   return (
     <header className="fixed top-0 left-0 z-50 w-full animate-fade-in opacity-0 border-b p-2  backdrop-blur-[12px] [--animation-delay:600ms]">
 
