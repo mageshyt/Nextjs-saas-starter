@@ -103,7 +103,6 @@ export function DataTable<TData, TValue>({
                     key={column.id}
                     className="capitalize"
                     checked={column.getIsVisible()}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onCheckedChange={(value: any) =>
                       column.toggleVisibility(!!value)
                     }

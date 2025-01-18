@@ -72,7 +72,6 @@ async function handler(request: Request) {
 type EventType = "user.created" | "user.updated" | "*";
 
 type Event = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, string | any>;
   object: "event";
   type: EventType;

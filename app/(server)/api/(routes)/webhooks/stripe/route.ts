@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { subscriptionPlans } from "@/config/subscriptions";
 import { env } from "@/env";
 import { db } from "@/lib/db";
@@ -18,6 +19,7 @@ export async function POST(req: NextRequest) {
 
     console.log("Stripe event received:", event.type);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const handlers: Record<string, Function> = {
       "customer.subscription.created": () => handleSubscriptionEvent(event, "created"),
       "customer.subscription.updated": () => handleSubscriptionEvent(event, "updated"),
@@ -210,7 +212,6 @@ async function handleInvoiceEvent(
     return NextResponse.json({ status: 500, error: "Internal Server Error" });
   }
 }
-
 
 async function handleCheckoutSessionCompletedEvent(
   event: Stripe.Event,

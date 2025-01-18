@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, Dot, LucideIcon } from "lucide-react";
+import { ChevronDown,  LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -45,6 +45,7 @@ interface CollapseMenuButtonProps {
 export function CollapseMenuButton({
   icon: Icon,
   label,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   active,
   submenus,
   isOpen

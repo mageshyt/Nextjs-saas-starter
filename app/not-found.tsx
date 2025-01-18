@@ -36,7 +36,7 @@ export default function NotFound() {
                   Lost in Space?
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-md mx-auto">
-                  The page you're looking for has drifted into another dimension. Let's get you back on track.
+                  The page you&apos;re looking for has drifted into another dimension. Let&apos;s get you back on track.
                 </p>
               </div>
 
@@ -68,7 +68,7 @@ export default function NotFound() {
 
           {/* Footer text */}
           <p className="text-muted-foreground/60 text-sm text-center mt-12">
-            Don't worry, even the best explorers get lost sometimes.
+            Don&apos;t worry, even the best explorers get lost sometimes.
           </p>
         </div>
       </div>
