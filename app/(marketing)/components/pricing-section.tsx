@@ -13,7 +13,7 @@ import LampPricing from '@/components/ui/lamp-pricing';
 import { Switch } from '@/components/ui/switch';
 
 import PricingCard from './pricing-card';
-import { subscriptions } from '@/config/subscriptions';
+import { subscriptionPlans } from '@/config/subscriptions';
 
 
 const PricingSection = () => {
@@ -57,7 +57,7 @@ const PricingSection = () => {
         className="-mt-72  flex flex-col items-center justify-center">
 
         <motion.div
-          className="flex items-center justify-center space-x-2  z-[100] ">
+          className="flex items-center justify-center space-x-2  z-[10] ">
           <Switch id="interval" onCheckedChange={() => setIsYearly((perv) => !perv)} />
           <span>Annual</span>
           <span className="inline-block bg-black dark:bg-white px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase text-white dark:text-black">
@@ -67,9 +67,9 @@ const PricingSection = () => {
         </motion.div>
         {/* pricing cards */}
 
-        <div className="grid grid-cols-1 z-[100] gap-6 mt-6 sm:grid-cols-3">
+        <div className="grid grid-cols-1 z-[10] gap-6 mt-6 sm:grid-cols-3">
           <ListView
-            items={subscriptions}
+            items={subscriptionPlans}
             render={(plan, index) => (
               <PricingCard
                 key={index}
