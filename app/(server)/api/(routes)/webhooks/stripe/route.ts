@@ -121,7 +121,7 @@ async function handleCreatedSubscription(subscriptionData: any, plan: any, subsc
   console.log("Subscription created:", newSubscription);
 
   await db.payment.upsert({
-    where: { stripe_id_subscription_id: { stripe_id: subscription.customer.toString(), subscription_id: newSubscription.id } }, 
+    where: { stripe_id_stripe_subscription_id: { stripe_id: subscription.customer.toString(), stripe_subscription_id: newSubscription.subscription_id } }, 
     update:{
       stripe_id: subscription.customer.toString(),
       email: subscriptionData.email,
@@ -137,6 +137,7 @@ async function handleCreatedSubscription(subscriptionData: any, plan: any, subsc
       stripe_id: subscription.customer.toString(),
       email: subscriptionData.email,
       subscription_id: newSubscription.id,
+      stripe_subscription_id: subscription.id,
       amount: plan.amount.toDecimalPlaces(2).toString(),
       currency: plan.currency,
       customer_details: JSON.stringify(subscription.metadata),
@@ -200,9 +201,9 @@ async function handleInvoiceEvent(
     } else {
       await db.payment.update({
         where: {
-          stripe_id_subscription_id: {
+          stripe_id_stripe_subscription_id: {
             stripe_id: currentSubscription.stripe_user_id,
-            subscription_id: currentSubscription.id,
+            stripe_subscription_id: currentSubscription.subscription_id,
           },
         },
         data: { status: "FAILED" },
@@ -221,9 +222,9 @@ async function handleInvoiceEvent(
 async function handlePaymentSucceeded(currentSubscription: Subscription, plan_id: string, currentuser: User) {
   await db.payment.update({
     where: {
-      stripe_id_subscription_id: {
+        stripe_id_stripe_subscription_id: {
         stripe_id: currentSubscription.stripe_user_id,
-        subscription_id: currentSubscription.id,
+        stripe_subscription_id: currentSubscription.subscription_id,
       },
     },
     data: { status: "SUCCEEDED" },
