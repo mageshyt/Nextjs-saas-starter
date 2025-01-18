@@ -5,7 +5,8 @@ import {
   Bookmark,
   SquarePen,
   LayoutGrid,
-  LucideIcon
+  LucideIcon,
+  CreditCard
 } from "lucide-react";
 
 type Submenu = {
@@ -30,39 +31,19 @@ type Group = {
 export function getMenuList(): Group[] {
   return [
     {
-      groupLabel: "",
+      groupLabel: "Menu",
       menus: [
         {
           href: "/dashboard",
           label: "Dashboard",
           icon: LayoutGrid,
           submenus: []
+        },
+        {
+          href:"/dashboard/billing",
+          label:"Billing",
+          icon: CreditCard,
         }
-      ]
-    },
-    {
-      groupLabel: "Contents",
-      menus: [
-        {
-          href: "",
-          label: "Posts",
-          icon: SquarePen,
-          submenus: [
-            {
-              href: "/posts",
-              label: "All Posts"
-            },
-            {
-              href: "/posts/new",
-              label: "New Post"
-            }
-          ]
-        },
-        {
-          href: "/categories",
-          label: "Categories",
-          icon: Bookmark
-        },
       ]
     },
     {

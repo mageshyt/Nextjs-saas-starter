@@ -29,3 +29,16 @@ export type Product = {
   createdAt: Date;
   updatedAt: Date;
 }
+
+
+export type SiteConfig = {
+  name: string;
+  description: string;
+  url: string;
+  ogImage: string;
+  mailSupport: string;
+  links: {
+    twitter: string;
+    github: string;
+  };
+};
