@@ -1,14 +1,14 @@
-import React from 'react'
-
-import { constructMetadata } from "@/lib/utils";
-import { DashboardHeader } from '@/components/dashboard-panel/dashboard-header';
-import { ContentLayout } from '@/components/dashboard-panel/content-layout';
-import { currentUserProfile } from '@/lib/current-user';
-import { getUserSubscription } from '@/lib/subscription';
 import { redirect } from 'next/navigation';
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { currentUserProfile } from '@/lib/current-user';
+import { getUserSubscription } from '@/lib/subscription';
+import { constructMetadata } from "@/lib/utils";
+
 import { AlertTriangle } from 'lucide-react';
+
+import { DashboardHeader } from '@/components/dashboard-panel/dashboard-header';
+import { ContentLayout } from '@/components/dashboard-panel/content-layout';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { BillingInfo } from './components/billion-info';
 
 export const metadata = constructMetadata({
