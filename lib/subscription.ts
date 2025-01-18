@@ -1,8 +1,9 @@
 import { subscriptionPlans } from "@/config/subscriptions";
 import { db } from "./db";
 import { stripe } from "./stripe";
+import { cache } from "react";
 
-export const getUserSubscription = async (userId: string) => {
+export const getUserSubscription =cache(async (userId: string) => {
   if (!userId) return null;
 
   try {
@@ -13,8 +14,8 @@ export const getUserSubscription = async (userId: string) => {
 
     if (!userSubscription) return null;
 
-    const hasActiveSubscription =
-      userSubscription.plan_id &&
+    const hasActiveSubscription: boolean =
+      !!userSubscription.plan_id &&
       (userSubscription.end_date?.getTime() || Date.now()) > Date.now();
 
     const userPlan = subscriptionPlans.find(
@@ -26,7 +27,7 @@ export const getUserSubscription = async (userId: string) => {
     const interval = hasActiveSubscription
       ? userSubscription.plan?.interval : null;
 
-    let isCancelled = false;
+    let isCanceled = false;
     if (hasActiveSubscription && userSubscription.subscription_id) {
       const stripeSubscription = await stripe.subscriptions.retrieve(
         userSubscription.subscription_id
@@ -34,20 +35,23 @@ export const getUserSubscription = async (userId: string) => {
 
       
 
-      isCancelled =
+      isCanceled =
         stripeSubscription.cancel_at_period_end ||
         stripeSubscription.status === "canceled";
     }
 
     return {
-      ...userSubscription,
+      ...userSubscription.plan,
+      name: userSubscription.plan?.name || "Free",
+      description: userPlan?.description || "Free plan",
       stripeCurrentPeriodEnd: userSubscription.end_date,
       hasActiveSubscription,
+      stripeCustomerId: userSubscription.stripe_user_id,
       interval,
-      isCancelled,
+      isCanceled,
     };
   } catch (error) {
     console.error("Error fetching user subscription:", error);
     return null;
   }
-};
+});
