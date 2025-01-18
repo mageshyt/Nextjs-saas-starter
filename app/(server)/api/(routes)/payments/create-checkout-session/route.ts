@@ -21,10 +21,10 @@ export async function POST(req: NextRequest) {
     const userSubscription = await getUserSubscription(user.id);
     console.log("User subscription:", userSubscription);
 
-    if (userSubscription?.hasActiveSubscription && userSubscription?.stripe_user_id && !userSubscription?.isCancelled) {
+    if (userSubscription?.hasActiveSubscription && userSubscription?.stripeCustomerId && !userSubscription?.isCanceled) {
       // User on paid plan - redirect to billing portal
       const stripePortalSession = await stripe.billingPortal.sessions.create({
-        customer: userSubscription.stripe_user_id,
+        customer: userSubscription.stripeCustomerId,
         return_url: dashboardUrl
       });
       redirectUrl = stripePortalSession.url;
