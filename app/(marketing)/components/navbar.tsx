@@ -3,15 +3,7 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { UserButton, useUser } from "@clerk/nextjs"
-import {
-  NavigationMenu,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuViewport,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import { Button } from "@/components/ui/button"
 
 export default function Navbar() {
   const user = useUser()?.isSignedIn
@@ -26,68 +18,48 @@ export default function Navbar() {
           </a>
         </Link>
 
-        {/* Navigation Menu */}
-        <NavigationMenu className="ml-auto">
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href="/blog" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Blog
-                </NavigationMenuLink>
+        {/* Navigation */}
+        <nav className="flex items-center gap-6">
+          <Link href="/blog" className="text-sm hover:underline font-medium">
+            Blog
+          </Link>
+          <Link href="/docs" className="text-sm hover:underline font-medium">
+            Documentation
+          </Link>
+          <Link href="#pricing" className="text-sm hover:underline font-medium">
+            Pricing
+          </Link>
+          <Link href="#features" className="text-sm hover:underline font-medium">
+            Features
+          </Link>
+        </nav>
+
+        {/* User Actions */}
+        <div className=" flex h-full items-center gap-6">
+          {!user ? (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/sign-in">Sign In</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/sign-up">Sign up</Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                href={"/dashboard"}
+                className="relative inline-flex h-10 overflow-hidden rounded-full p-[2px] focus:outline-none  "
+              >
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                  {user ? "Dashboard" : "Get Started"}
+                </span>
               </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Documentation
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="#pricing" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Pricing
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="#features" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Feature
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            {user ? (
-              <NavigationMenuItem>
-                <UserButton />
-              </NavigationMenuItem>
-            ) : (
-              <>
-                <NavigationMenuItem>
-                  <Link href="/sign-in" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Sign In
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link href="/sign-up" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Sign Up
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              </>
-            )}
-
-            <NavigationMenuIndicator />
-          </NavigationMenuList>
-          <NavigationMenuViewport />
-        </NavigationMenu>
+              <UserButton />
+            </>
+          )}
+        </div>
       </div>
     </header>
   )
