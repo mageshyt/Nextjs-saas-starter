@@ -23,8 +23,8 @@ const footerNavs = [
   {
     label: 'Legal',
     items: [
-      { href: '/', name: 'Terms' },
-      { href: '/', name: 'Privacy' },
+      { href: '/terms', name: 'Terms' },
+      { href: '/privacy', name: 'Privacy' },
     ],
   },
 ];
