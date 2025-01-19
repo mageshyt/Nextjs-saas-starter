@@ -2,6 +2,7 @@
 
 import blog__deployingNextAppMdx from './blog__deploying-next-app.mdx.json' with { type: 'json' }
 import blog__dynamicRoutingStaticRegenerationMdx from './blog__dynamic-routing-static-regeneration.mdx.json' with { type: 'json' }
+import blog__journeyOfOurStarterkitMdx from './blog__journey-of-our-starterkit.mdx.json' with { type: 'json' }
 import blog__serverClientComponentsMdx from './blog__server-client-components.mdx.json' with { type: 'json' }
 
-export const allPosts = [blog__deployingNextAppMdx, blog__dynamicRoutingStaticRegenerationMdx, blog__serverClientComponentsMdx]
+export const allPosts = [blog__deployingNextAppMdx, blog__dynamicRoutingStaticRegenerationMdx, blog__journeyOfOurStarterkitMdx, blog__serverClientComponentsMdx]
