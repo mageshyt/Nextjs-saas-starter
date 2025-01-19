@@ -16,7 +16,7 @@ export const BLOG_CATEGORIES: {
 ];
 
 export const BLOG_AUTHORS = {
-  mickasmt: {
+  magesh: {
     name: "mageshyt",
     image: "/_static/avatars/magesh.jpeg",
     twitter: "mageshyt",
@@ -27,3 +27,5 @@ export const BLOG_AUTHORS = {
     twitter: "shadcn",
   },
 };
+
+export type BlogAuthors = typeof BLOG_AUTHORS[keyof typeof BLOG_AUTHORS];
