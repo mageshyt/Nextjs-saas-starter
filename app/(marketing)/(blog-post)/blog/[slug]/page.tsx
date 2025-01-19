@@ -1,5 +1,3 @@
-
-import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -19,7 +17,7 @@ import { Mdx } from "@/components/content/mdx-components";
 import { buttonVariants } from "@/components/ui/button";
 import Author from "@/components/content/author-card";
 import BlurImage from "@/components/global/blur-image";
-import {MaxWidthWrapper} from "@/components/global/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/global/max-width-wrapper";
 import { DashboardTableOfContents } from "@/components/content/toc";
 import { getTableOfContents } from "@/lib/toc";
 import { dateFormat } from "@/utils/format";
@@ -29,13 +27,15 @@ export async function generateStaticParams() {
     slug: post.slugAsParams,
   }));
 }
+type Params = Promise<{ slug: string }>
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata | undefined> {
-  const post = allPosts.find((post) => post.slugAsParams === params.slug);
+
+export async function generateMetadata(props: {
+  params: Params
+
+}) {
+  const { slug } = await props.params;
+  const post = allPosts.find((post) => post.slugAsParams === slug[0]);
   if (!post) {
     return;
   }
@@ -49,14 +49,12 @@ export async function generateMetadata({
   });
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: {
-    slug: string;
-  };
+export default async function PostPage(props: {
+  params: Params
+  
 }) {
-  const post = allPosts.find((post) => post.slugAsParams === params.slug);
+  const { slug } = await props.params;
+  const post = allPosts.find((post) => post.slugAsParams === slug[0]);
 
   if (!post) {
     notFound();
@@ -85,8 +83,6 @@ export default async function PostPage({
     ),
   ]);
 
-  console.log("toc", post);
-
   return (
     <>
       <MaxWidthWrapper className="pt-6 md:pt-10">
@@ -98,7 +94,7 @@ export default async function PostPage({
                 buttonVariants({
                   variant: "outline",
                   size: "sm",
-                 
+
                 }),
                 "h-8",
               )}
@@ -161,7 +157,7 @@ export default async function PostPage({
             </p>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-6">
-            {relatedArticles.map((post) => (
+              {relatedArticles.map((post) => (
                 <Link
                   key={post.slug}
                   href={post.slug}

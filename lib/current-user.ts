@@ -15,7 +15,8 @@ export const currentUserProfile = cache(async () => {
     const user = await db.user.findUnique({
       where: {
         user_id: userId
-      }
+      },
+      cacheStrategy: { ttl: 60 }
     })
 
     return user
