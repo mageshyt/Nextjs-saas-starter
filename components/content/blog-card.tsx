@@ -3,8 +3,8 @@ import Link from "next/link";
 import { cn, placeholderBlurhash } from "@/lib/utils";
 import BlurImage from "@/components/global/blur-image";
 import { dateFormat } from "@/utils/format";
-import Author from "./author-card";
 import { Post } from "@/.contentlayer/generated";
+import Author from "@/components/content/author-card";
 
 
 export const BlogCard=({
