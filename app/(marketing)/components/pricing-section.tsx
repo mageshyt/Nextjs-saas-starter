@@ -67,7 +67,7 @@ const PricingSection = () => {
         </motion.div>
         {/* pricing cards */}
 
-        <div className="grid grid-cols-1 z-[10] gap-6 mt-6 sm:grid-cols-3">
+        <div className="grid grid-cols-1 z-[10] gap-6 mt-6 md:grid-cols-3">
           <ListView
             items={subscriptionPlans}
             render={(plan, index) => (

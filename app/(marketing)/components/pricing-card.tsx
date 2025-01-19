@@ -29,7 +29,7 @@ const PricingCard = ({ user, handleCheckout, isYearly, title, priceIdMonthly, pr
   const router = useRouter();
   return (
     <Card
-      className={cn(`w-72 flex flex-col justify-between py-1 ${popular ? "border-white border-2" : "border-zinc-700"} mx-auto sm:mx-0`, {
+      className={cn(`md:w-72 w-full flex flex-col justify-between py-1 ${popular ? "border-white border-2" : "border-zinc-700"} mx-auto sm:mx-0`, {
         "animate-background-shine bg-white dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] transition-colors":
           exclusive,
       })}>
