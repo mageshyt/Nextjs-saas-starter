@@ -6,8 +6,13 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./content/**/*.{md,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: ".8rem",
+    },
   	extend: {
   		colors: {
   			background: 'hsl(var(--background))',
