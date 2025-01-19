@@ -7,10 +7,10 @@ interface MarketingLayoutProps {
 
 export default async function MarketingLayout({ children }: MarketingLayoutProps) {
   return (
-    <>
-      <Navbar/>
-      <main className='mx-auto mt-4 p-4 flex-1 overflow-hidden'>{children}</main>
-      <Footer/>
-    </>
+    <div className="flex min-h-screen flex-col">
+      <Navbar />
+      <main className='mt-4 mx-auto p-4 flex-1'>{children}</main>
+      <Footer />
+    </div >
   );
 }
