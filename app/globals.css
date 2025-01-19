@@ -110,3 +110,12 @@ body {
     content: counter(step);
   }
 }
+
+
+/* hide scrollbar from while page */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+
+
