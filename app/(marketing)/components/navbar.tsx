@@ -19,7 +19,7 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation */}
-        <nav className="flex items-center gap-6">
+        <nav className="hidden items-center md:flex gap-6">
           <Link href="/blog" className="text-sm hover:underline font-medium">
             Blog
           </Link>

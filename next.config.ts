@@ -1,8 +1,22 @@
 
 import type { NextConfig } from 'next';
-const { withContentlayer } = require("next-contentlayer2");
+import { withContentlayer } from 'next-contentlayer2';
 
+/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
+  experimental: {
+    turbo: {
+      resolveExtensions: [
+        '.mdx',
+        '.tsx',
+        '.ts',
+        '.jsx',
+        '.js',
+        '.mjs',
+        '.json',
+      ],
+    }
+  },
   images: {
     remotePatterns: [{
       protocol: 'https',
@@ -26,7 +40,8 @@ const nextConfig: NextConfig = {
       port: '',
       pathname: '/**'
     }]
-  }
+  },
+  transpilePackages:['mdx-bundler', 'mdx-bundler/client'],
 };
 export default withContentlayer(nextConfig);
 

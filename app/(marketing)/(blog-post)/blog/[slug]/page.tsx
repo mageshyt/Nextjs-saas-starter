@@ -21,6 +21,7 @@ import { MaxWidthWrapper } from "@/components/global/max-width-wrapper";
 import { DashboardTableOfContents } from "@/components/content/toc";
 import { getTableOfContents } from "@/lib/toc";
 import { dateFormat } from "@/utils/format";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -33,11 +34,11 @@ type Params = Promise<{ slug: string }>
 export async function generateMetadata(props: {
   params: Params
 
-}) {
+}): Promise<Metadata | undefined> {
   const { slug } = await props.params;
   const post = allPosts.find((post) => post.slugAsParams === slug[0]);
   if (!post) {
-    return;
+    return 
   }
 
   const { title, description, image } = post;
@@ -54,7 +55,7 @@ export default async function PostPage(props: {
   
 }) {
   const { slug } = await props.params;
-  const post = allPosts.find((post) => post.slugAsParams === slug[0]);
+  const post = allPosts.find((post) => post.slugAsParams === slug);
 
   if (!post) {
     notFound();

@@ -20,7 +20,7 @@ export const BlogHeader = () => {
   return (
     <>
 
-      <MaxWidthWrapper className="py-6 md:pb-8 md:pt-10">
+      <MaxWidthWrapper className="py-6 md:pb-8 pt-10">
         <div className="max-w-screen-sm">
           <h1 className="font-heading text-3xl md:text-4xl">
             {data?.title || "Blog"}
