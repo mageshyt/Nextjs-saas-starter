@@ -1,21 +1,34 @@
 ---
 title: Installation
-description: How to install the project.
+description: Step-by-step guide to install and configure your SaaS project
 ---
 
 <Steps>
 
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js 18+ 
+- bun (recommended) or npm
+- Git
+- A code editor (NeoVim, VSCode, etc.)
+
+
+
 ### Create project
 
-Start by creating a new Next.js project using `create-next-app`:
+Choose one of these methods to create your project:
 
+#### Method 1: Using create-next-app
 ```bash
-npx create-next-app my-saas-project --example "https://github.com/mickasmt/next-saas-stripe-starter"
+npx create-next-app my-saas-project --example "https://github.com/mageshyt/next-saas-starter"
 ```
 
-Or deploy with Vercel :
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmickasmt%2Fnext-saas-stripe-starter)
+#### Method 2: Clone repository
+```bash
+  git clone https://github.com/mageshyt/next-saas-starter my-saas-project
+  cd my-saas-project
+```
 
 <Callout type="warning" twClass="mt-4"> 
   A good way to create your repository, but the deployment will fail because you
@@ -29,7 +42,7 @@ Enter in the folder and install dependencies for your project:
 
 ```bash
 cd my-saas-project
-pnpm install
+bun install
 ```
 
 ### Create a `.env` file
@@ -60,7 +73,7 @@ NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=
 
 ### Configuration part
 
-Let's check the configuration part for update all environment variables before use `pnpm run dev`.
+Let's check the configuration part for update all environment variables before use `bun run dev`.
 
 
 </Steps>
