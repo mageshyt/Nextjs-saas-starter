@@ -2,10 +2,10 @@
 
 import React from 'react'
 import Link from "next/link"
-import Image from "next/image"
 import { cn } from "@/lib/utils"
 import SearchCommandMenu from './search-command'
 import { Github } from 'lucide-react'
+import Logo from '@/components/global/logo'
 
 const DocsNavBar = () => {
   return (
@@ -14,12 +14,7 @@ const DocsNavBar = () => {
         {/* Logo */}
         <div className="mr-4 flex">
           <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              width={26}
-              height={26}
-            />
+            <Logo />
           </Link>
         </div>
 

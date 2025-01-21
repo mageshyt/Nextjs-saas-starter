@@ -1,9 +1,11 @@
 "use client"
 import React from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { UserButton, useUser } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
+import { marketingConfig } from "@/config/marketing"
+import ListView from "@/components/global/list-view"
+import Logo from "@/components/global/logo"
 
 export default function Navbar() {
   const user = useUser()?.isSignedIn
@@ -13,25 +15,19 @@ export default function Navbar() {
       <div className="flex h-[3rem] mx-4 items-center justify-between">
         {/* Logo */}
         <Link href="/" legacyBehavior passHref>
-          <a className="relative size-6">
-            <Image src="/logo.svg" fill className="object-cover" alt="logo" />
-          </a>
+          <Logo />
         </Link>
 
         {/* Navigation */}
         <nav className="hidden items-center md:flex gap-6">
-          <Link href="/blog" className="text-sm hover:underline font-medium">
-            Blog
-          </Link>
-          <Link href="/docs" className="text-sm hover:underline font-medium">
-            Documentation
-          </Link>
-          <Link href="#pricing" className="text-sm hover:underline font-medium">
-            Pricing
-          </Link>
-          <Link href="#features" className="text-sm hover:underline font-medium">
-            Features
-          </Link>
+          <ListView
+            items={marketingConfig.mainNav}
+            render={(item, index) => (
+              <Link href={item.href} key={index} className="text-sm hover:underline">
+                {item.title}
+              </Link>
+            )}
+          />
         </nav>
 
         {/* User Actions */}

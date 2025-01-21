@@ -11,23 +11,22 @@ interface LogoProps {
   mode?: "light" | "dark";
 }
 
-const Logo: FC<LogoProps> = ({ height = 130, width = 130, mode }) => {
+const Logo: FC<LogoProps> = ({ height = 26, width = 26, mode }) => {
   const { theme, resolvedTheme } = useTheme();
 
   const isDark = resolvedTheme === "dark" || mode === "dark" || theme === "dark";
 
 
-  const logo = isDark ? "/logo-dark.svg" : "/logo.svg";
+  const logo = isDark ? "/logo.svg" : "/logo.svg";
 
   return (
     <ClientWrapper>
-
-    <Image
-      height={height}
-      width={width}
-      src={logo}
-      alt="Logo"
-    />
+      <Image
+        height={height}
+        width={width}
+        src={logo}
+        alt="Logo"
+      />
     </ClientWrapper>
   );
 };
