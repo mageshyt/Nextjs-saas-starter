@@ -233,6 +233,7 @@ export function Mdx({ code, images }: MdxProps) {
         components={{
           ...components,
           Image: MDXImage,
+          Step: components.Step,
         }}
       />
     </div>
