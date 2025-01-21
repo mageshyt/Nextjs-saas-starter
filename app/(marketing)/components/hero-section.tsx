@@ -17,7 +17,7 @@ const HeroSection = () => {
       {/* Animated Shiny Text */}
       <div className='backdrop-filter-[12px] inline-flex h-8 items-center justify-between rounded-full border border-white/5 bg-white/10 px-3 text-xs text-white dark:text-black transition-all ease-in hover:cursor-pointer hover:bg-white/20 group gap-1 translate-y-[-1rem] animate-fade-in opacity-0'>
         <AnimatedShinyText className='inline-flex items-center justify-center'>
-          <span>✨ Introducing Next SASS Starter</span>{' '}
+          <span>✨ Introducing Next SAAS Starter</span>{' '}
           <ArrowRightIcon className='ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5' />
         </AnimatedShinyText>
       </div>
@@ -38,7 +38,7 @@ const HeroSection = () => {
       >
         Build Smarter, Style Faster
         <br className='hidden md:block' />
-        with Next.js + Sass.
+        with Next.js + SAAS.
       </h1>
       <p className='mb-12 text-lg tracking-tight text-gray-400 md:text-xl text-balance translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]'>
         Beautifully designed, crafted, implemented, and built with the best tech stack
