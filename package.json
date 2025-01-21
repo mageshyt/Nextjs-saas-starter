@@ -2,8 +2,8 @@
   "name": "sass-starter",
   "version": "0.1.0",
   "private": true,
-  "auth":{
-    "name":"magesh"
+  "auth": {
+    "name": "magesh"
   },
   "scripts": {
     "dev": "next dev --turbopack",
