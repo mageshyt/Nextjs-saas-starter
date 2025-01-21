@@ -1,3 +1,6 @@
+
+import type {  LucideIcon } from "lucide-react";
+
 export enum ProductStatus {
   todo = 'todo',
   inProgress = 'inProgress',
@@ -41,4 +44,31 @@ export type SiteConfig = {
     twitter: string;
     github: string;
   };
+};
+
+
+export type NavItem = {
+  title: string;
+  href: string;
+  badge?: number;
+  disabled?: boolean;
+  external?: boolean;
+  icon?: LucideIcon;
+};
+
+export type MainNavItem = NavItem;
+
+export type MarketingConfig = {
+  mainNav: MainNavItem[];
+};
+
+export type SidebarNavItem = {
+  title: string;
+  items: NavItem[];
+  disabled?: boolean;
+  icon?: LucideIcon;
+};
+export type DocsConfig = {
+  mainNav: MainNavItem[];
+  sidebarNav: SidebarNavItem[];
 };
