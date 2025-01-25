@@ -1,0 +1,101 @@
+---
+title: Database Configuration
+description: A quick overview on setting up Prisma with a PostgreSQL database.
+---
+
+# Database Configuration
+
+This guide provides a basic overview of using [Prisma](https://www.prisma.io/) with a PostgreSQL database in your Next.js SaaS Starter.
+
+<Steps>
+
+### Prerequisites
+
+- PostgreSQL database (local or hosted)  
+- [Prisma CLI](https://www.prisma.io/docs/reference/api-reference/command-reference)  
+- [Database URL](#set-database-url) added to your `.env` file  
+
+<Callout type="note">
+    This guide assumes you have a PostgreSQL database set up and running. If you need help setting up a PostgreSQL database, refer to the [official documentation](https://www.postgresql.org/docs/).
+
+</Callout>
+
+### 1. Install Prisma
+
+```bash
+bun install -D prisma
+bun install @prisma/client
+```
+### 2. Initialize Prisma
+
+Run the following command to initialize Prisma in your project:
+
+```bash
+bunx prisma init
+```
+
+
+This creates a `prisma` directory with the following files:
+
+```text
+prisma/
+└── schema.prisma
+.env
+
+```
+
+
+### 3. Configure Schema
+
+
+Edit the `schema.prisma` file to define your database schema:
+
+```prisma title="prisma/schema.prisma"
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+```
+
+### 4. Set Database URL
+
+
+Add your database URL to the `.env` file:
+
+```md title=".env"
+DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
+```
+
+
+### 5. Run Migrations
+
+
+Run the following command to create the database tables:
+
+```bash
+
+bunx prisma migrate dev --name init
+```
+
+### 6. Prisma Studio
+
+Run the following command to open Prisma Studio:
+
+```bash
+bunx prisma studio
+```
+</Steps>
