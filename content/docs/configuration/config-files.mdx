@@ -1,0 +1,105 @@
+---
+title: Config Files
+description: Learn how to customize your SaaS application using configuration files
+---
+
+# Configuration Files
+
+Our SaaS starter uses TypeScript configuration files to manage various aspects of the application. These files are located in the `config/` directory.
+
+
+
+## List of files
+
+Here's the list of config files available:
+
+<Steps>
+
+### Marketing Configuration
+
+The `marketing.ts` file controls the navigation items for the marketing pages.
+
+
+```typescript {5,6}
+// config/marketing.ts
+export const marketingConfig = {
+  mainNav: [
+    {
+      title: "Pricing",
+      href: "/pricing",
+    },
+    // Add more navigation items...
+  ],
+}
+```
+
+### Menu List Configuration
+
+The `menu-list.ts` file defines the dashboard's sidebar navigation structure.
+ 
+```typescript
+// config/menu-list.ts
+type Menu = {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+  submenus?: Submenu[];
+};
+
+export function getMenuList(): Group[] {
+  return [
+    {
+      groupLabel: "Menu",
+      menus: [
+        {
+          href: "/dashboard",
+          label: "Dashboard",
+          icon: LayoutGrid,
+        },
+        // Add more menu items...
+      ]
+    }
+  ];
+}
+```
+
+### Site Configuration
+
+The `site.ts` file holds the site's metadata and configuration.
+
+```typescript
+// config/site.ts
+
+export const siteConfig = {
+  name: "Your SaaS Name",
+  description: "Your site description",
+  url: process.env.NEXT_PUBLIC_APP_URL,
+  links: {
+    twitter: "https://twitter.com/yourusername",
+    github: "https://github.com/yourusername",
+  }
+}
+```
+
+### Subscriptions
+
+`subscriptions.ts` holds all necessary data for configuring pricing cards.
+
+Here's the structure for a pricing card:
+
+```js
+[
+  {
+    title: "Basic",
+    monthlyPrice: 10,
+    yearlyPrice: 100,
+    description: "Essential features you need to get started",
+    features: ["Example Feature Number 1", "Example Feature Number 2", "Example Feature Number 3"],
+    priceIdMonthly: env.NEXT_PUBLIC_STRIPE_PRICE_ID_BASIC_MONTHLY,
+    priceIdYearly: env.NEXT_PUBLIC_STRIPE_PRICE_ID_BASIC_YEARLY,
+    actionLabel: "Get Started",
+  },
+],
+```
+
+</Steps>
