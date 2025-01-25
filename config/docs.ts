@@ -43,6 +43,12 @@ export const docsConfig: DocsConfig = {
           icon: Book
         },
         {
+          title: "Blog Components",
+          href: "/docs/configuration/blog-components",
+          icon: Code
+
+        },
+        {
           title: "Components",
           href: "/docs/configuration/components",
           icon: Code

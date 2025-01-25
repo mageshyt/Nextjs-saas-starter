@@ -10,7 +10,11 @@
 - [x] navbar for the docs
 - [x] add a search bar for the docs
 - [x] update the links in the index.mdx
-- [ ] create auth docs
-- [ ] create component docs
-- [ ] create blog docs
+- [x] create auth docs
+- [x] create component docs
+- [x] create blog docs
+- [x] Database docs
+- [x] config file docs
 - [ ] create payment docs
+- [ ] improve testing docs
+- [ ] create layout docs
