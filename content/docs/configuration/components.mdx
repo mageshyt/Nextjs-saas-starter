@@ -3,148 +3,88 @@ title: Components
 description: Use React components in Markdown using MDX.
 ---
 
-The following components are available out of the box for use in Markdown.
 
-If you'd like to build and add your own custom components, see the [Custom Components](#custom-components) section below.
 
-## Built-in Components
 
-### 1. Callout
+Below are several custom components integrated into the project. These examples demonstrate how to use them in Markdown by leveraging MDX.
+
+---
+
+## 1. ListView
+
+Renders an array of items using a custom render function.
 
 ```jsx
-<Callout type="default | warning | danger | note | info | success">
-  This is a default callout. You can embed **Markdown** inside a `callout`.
-</Callout>
+import ListView from "@/components/global/list-view";
+
+<ListView
+  items={["First", "Second", "Third"]}
+  render={(item) => <div>{item}</div>}
+/>
+
 ```
 
-<Callout>
-  This is a default callout. You can embed **Markdown** inside a `callout`.
-</Callout>
 
-<Callout type="warning">
-  This is a warning callout. It uses the props `type="warning"`.
-</Callout>
+## 2. BlurImage
 
-<Callout type="danger">
-  This is a danger callout. It uses the props `type="danger"`.
-</Callout>
-
-<Callout type="note">
-  This is a warning callout. It uses the props `type="note"`.
-</Callout>
-
-<Callout type="info">
-  This is a danger callout. It uses the props `type="info"`.
-</Callout>
-
-<Callout type="success">
-  This is a warning callout. It uses the props `type="success"`.
-</Callout>
-
-### 2. Card
-
-```mdx
-<Card href="#">
-
-#### Heading
-
-You can use **markdown** inside cards.
-
-</Card>
-```
-
-<Card href="#">
-
-#### Heading
-
-You can use **markdown** inside cards.
-
-</Card>
-
-You can also use HTML to embed cards in a grid.
-
-```mdx
-<div className="grid grid-cols-2 gap-4">
-  <Card href="#">
-    #### Card One 
-    You can use **markdown** inside cards.
-  </Card>
-
-  <Card href="#">
-    #### Card Two 
-    You can also use `inline code` and code blocks.
-  </Card>
-</div>
-```
-
-<div className="grid grid-cols-2 gap-4">
-  <Card href="#">
-    #### Card One 
-    You can use **markdown** inside cards.
-  </Card>
-
-  <Card href="#">
-    #### Card Two 
-    You can also use `inline code` and code blocks.
-  </Card>
-</div>
-
----
-
-## Custom Components
-
-You can add your own custom components using the `components` props from `useMDXComponent`.
-
-```ts title="components/mdx.tsx" {2,6}
-import { Callout } from "@/components/callout"
-import { CustomComponent } from "@/components/custom"
-
-const components = {
-  Callout,
-  CustomComponent,
-}
-
-export function Mdx({ code }) {
-  const Component = useMDXComponent(code)
-
-  return (
-    <div className="mdx">
-      <Component components={components} />
-    </div>
-  )
-}
-```
-
-Once you've added your custom component, you can use it in MDX as follows:
-
-```js
-<CustomComponent propName="value" />
-```
-
----
-
-## HTML Elements
-
-You can overwrite HTML elements using the same technique above.
-
-```ts {4}
-const components = {
-  Callout,
-  CustomComponent,
-  hr: ({ ...props }) => <hr className="my-4 border-slate-200 md:my-6" />,
-}
-```
-
-This will overwrite the `<hr />` tag or `---` in Mardown with the HTML output above.
-
----
-
-## Styling
-
-Tailwind CSS classes can be used inside MDX for styling.
+Displays a Next.js Image with a blur effect until fully loaded.
 
 ```jsx
-<p className="text-red-600">This text will be red.</p>
+import BlurImage from "@/components/global/blur-image";
+
+<BlurImage
+  src="/example.jpg"
+  alt="Example"
+  width={400}
+  height={300}
+/>
 ```
 
+## 3. CopyButton
+
+Copies text to the clipboard. Shows a check icon briefly after copying.
+
+```jsx
+import CopyButton from "@/components/global/copy-button";
+
+<CopyButton text="Hello, World!" />
+```
+
+## 4. Heading
+
+Displays a title and optional description in a simple wrapping layout.
+
+```jsx
+import Heading from "@/components/global/heading";
+
+<Heading
+  title="Section Title"
+  description="Additional description text."
+/>
+```
+## 5. MaxWidthWrapper
+
+Wraps content in a container with a customizable max width.
+```jsx
+
+import { MaxWidthWrapper } from "@/components/global/max-width-wrapper";
+
+<MaxWidthWrapper large>
+  <Heading title="Inside a wide container" />
+</MaxWidthWrapper>
+
+```
+## 6. CardSkeleton
+
+Renders a placeholder skeleton card for loading states.
+
+```jsx
+import { CardSkeleton } from "@/components/global/card-skeleton";
+
+<CardSkeleton />
+
+```
+
+
+ 
 Make sure you have configured the path to your content in your `tailwind.config.js` file:
