@@ -1,67 +1,150 @@
 ---
-title: Authentification
-description: How to config the authentification.
+title: Authentication with Clerk
+description: Learn how to integrate and configure Clerk for user authentication in your SaaS project.
 ---
 
-<Callout type="note" twClass="mt-0">
-  The auth part is similar at the [authjs](https://authjs.dev/) documentation.
-  You can follow the official documentation
-  [here](https://authjs.dev/getting-started/installation#setup-environment) if
-  you want.
-</Callout>
+<Steps>
 
-<Callout type="danger" twClass="mt-3">
-  After upgrade Auth.js to v5: `NEXTAUTH_URL` has removed from `.env` file. Same
-  thing **in production**.
-</Callout>
+### Overview
 
-## Update auth_secret variable
+This guide shows you how to set up user authentication using [Clerk](https://clerk.com/) in your **Next.js SaaS Starter**. Clerk provides out-of-the-box sign-up, sign-in, account management, and more.
 
-The only environment variable that is mandatory is the `AUTH_SECRET`. This is a random value used by the library to encrypt tokens and email verification hashes. You can generate one via running:
+### Prerequisites
 
-```bash
-npx auth secret
-```
+- A [Clerk](https://clerk.com/) account
+- Environment variables added to your `.env` file
 
-Alternatively, you can use the `openssl` CLI, `openssl rand -base64 33`.
+Refer to the [Installation guide](https://clerk.com/docs/quickstarts/nextjs) if you haven't set up your project yet.
 
-Or this [link](https://generate-secret.vercel.app/32) for generate a random secret key.
+## 1. Clerk Dashboard Setup
 
-Then add it to your `.env` file:
+1. Sign in to your Clerk dashboard at [clerk.com](https://clerk.com/).
 
-```js title=".env.local"
-AUTH_SECRET = secret;
-```
 
-## Update google client variables
+2. Create a new application and note down your credentials:
+   - Publishable Key (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`)
+   - Secret Key (`CLERK_SECRET_KEY`)
 
-In this section, you can update these variables:
-
-```js title=".env.local"
-GOOGLE_CLIENT_ID = your_secret_client_id.apps.googleusercontent.com;
-GOOGLE_CLIENT_SECRET = your_secret_client;
-```
-
-### Video explanation
-
-Watch a youtube video from [CodeWithAntonio](https://www.youtube.com/@codewithantonio) on how to configure the environment variables for NextAuth with Google authentication.
-
-<iframe
-  className="mt-6 aspect-video w-full"
-  src="https://www.youtube.com/embed/1MTyCvS05V4"
-  title="Next Auth V5 - Advanced Guide (2024)"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-  referrerPolicy="strict-origin-when-cross-origin"
-  allowFullScreen
-></iframe>
-
-- GoogleAuth **local** config at [3:24:30](https://www.youtube.com/watch?v=1MTyCvS05V4&t=12270s)
-- Update GoogleAuth after **deployment** at [7:52:31](https://www.youtube.com/watch?v=1MTyCvS05V4&t=12270s)
-
-### Google config for this repo
-
-<img
-  className="mt-4 overflow-hidden rounded-lg border"
-  src="/_static/docs/gg-auth-config.jpg"
+<img 
+  src="https://oeb69r4qet.ufs.sh/f/hPqdRuZjNogwl5cYZw60qJW72uQIKyVB58pftDEwTU36vosh"
+  className="rounded-lg my-6"
+  alt="Create a new application"
 />
 
+
+<img 
+  src="https://oeb69r4qet.ufs.sh/f/hPqdRuZjNogwhMenu7ZjNogwEFY16SUce53pAmdZRkJ9zPOL"
+  className="rounded-lg my-6"
+  alt="Sign card setup"
+/>
+
+<img 
+  src="https://oeb69r4qet.ufs.sh/f/hPqdRuZjNogwGmRGCreQcP5ijLO2qx0mSRKwtngV9pzUdAGI"
+  className="rounded-lg my-6"
+  alt="credentials"
+  />
+
+### 2. Environment Variables
+
+Open your `.env` file (copied from `.env.example`) and add the following:
+
+```bash title=".env"
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_XXXXXXXXXXXX
+CLERK_SECRET_KEY=sk_test_XXXXXXXXXXXX
+```
+
+<Callout type="warning" twClass="mt-4"> These keys are sensitive. Do not commit them to version control. Use environment variables on your hosting platform. </Callout>
+
+
+### 3. Project Configuration
+
+1. Install Clerk in your project:
+
+```bash
+bun add @clerk/clerk-react
+```
+*(Or use npm / pnpm / yarn depending on your setup.)*
+
+
+
+### 4. Webhook Configuration
+
+1. Go to your Clerk dashboard and navigate to **configuration** > **Webhooks**.
+
+
+<img
+  src="https://oeb69r4qet.ufs.sh/f/hPqdRuZjNogwQLI59frthiWaqxAr6knfFlocLUgvVJKG9zm2"
+  className="rounded-lg my-6"
+  alt="Webhook configuration"
+/>
+
+2. Add a new webhook with the following details:
+   - **URL**: `https://yourdomain.com/api/clerk/webhooks/user`
+
+
+<img
+src="https://oeb69r4qet.ufs.sh/f/hPqdRuZjNogwpF8edy4nN1mbIMyZhVKP9GR4jofYtuCiHBFL"
+className="rounded-lg my-6"
+alt="Webhook details"
+/>
+
+
+3. Turn on the **User Events** 
+
+  - **User Created**
+  - **User Updated**
+  - **User Deleted**
+
+<img
+src="https://oeb69r4qet.ufs.sh/f/hPqdRuZjNogweMk6LQKhdIivcu4Zxgw1WUmzlrS6tXPN3DsJ"
+className="rounded-lg my-6"
+alt="event"
+/>
+
+
+4. Copy the **Webhook Secret** and add it to your `.env` file:
+
+```bash title=".env"
+WEBHOOK_SECRET
+
+```
+
+<img
+  src="https://oeb69r4qet.ufs.sh/f/hPqdRuZjNogwGQQ5SteQcP5ijLO2qx0mSRKwtngV9pzUdAGI"
+  className="rounded-lg my-6"
+/>
+
+<Callout type="warning" twClass="mt-4"> 
+  The webhook secret is sensitive. Do not commit it to version control. Use environment variables on your hosting platform.
+</Callout>
+
+
+### Next Steps
+
+- Customize your sign-in, sign-up, and profile pages with
+- Connect user roles or advanced logic in the Clerk dashboard
+- Explore [Clerk Docs](https://clerk.com/docs) for more advanced configuration.
+
+
+```text
+app/        
+├── (auth)/  # Clerk authentication
+│   ├──  layout.tsx
+│   └── (routes)/
+│       ├── sign-in/
+│       │   └── [[...sign-in]]/
+│       │       └── page.tsx
+│       └── sign-up/
+│           └── -[[...sign-up]]/
+│               └── -page.tsx
+└── (server)/
+    └── api/
+        └── (routes)/
+            └── (webhooks)/ # webhook routes
+                └── user/
+                    └── route.ts
+```
+
+<Callout type="info" twClass="mt-4"> Your authentication system using Clerk is now ready. Continue exploring or set up additional features like social logins, multi-factor authentication, or user management in your Clerk dashboard. </Callout>
+</Steps> 
