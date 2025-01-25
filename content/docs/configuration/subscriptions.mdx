@@ -1,0 +1,26 @@
+---
+title: Subscriptions Configuration
+description: Learn how to configure and manage user subscriptions in your SaaS project.
+---
+
+# Subscriptions
+
+Subscriptions allow you to monetize your SaaS by providing features or services on a recurring basis. This section covers how to configure, handle, and maintain subscriptions within your application.
+
+## Overview
+
+1. **User Plans**: Define different tiers (e.g., Free, Basic, Pro) based on usage or features.  
+2. **Payment Processor**: Commonly Stripe or PayPal for recurring billing.  
+3. **Subscription Lifecycle**: Create, update, cancel, or resume subscriptions as needed.
+
+## Prerequisites
+
+- Active billing account with your payment processor (e.g., Stripe).  
+- Database table to store subscription information (e.g., “subscriptions,” “customers”).
+
+## Stripe Setup (Example)
+
+```bash
+bun install stripe
+```
+
