@@ -25,10 +25,9 @@ A modern, feature-rich starter kit for building SaaS applications with Next.js 1
 
 ## ✨ Features
 
-- 🏗️ **Next.js 14** - The React framework for production
-- 🔐 **Auth.js v5** - Authentication with multiple providers
+- 🏗️ **Next.js 15** - The React framework for production
+- 🔐 **Clerk** - Authentication with multiple providers
 - 💳 **Stripe** - Subscription payments and billing
-- 📧 **React Email & Resend** - Beautiful transactional emails
 - 🎨 **Shadcn/ui** - Beautiful and accessible UI components
 - 🗃️ **Prisma & Neon** - Type-safe database operations
 - 📝 **MDX** - Content management with Markdown
