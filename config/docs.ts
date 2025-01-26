@@ -1,5 +1,5 @@
 
-import { Book, Code, CreditCard, Database, FolderCode, Home, Layout, Lock, NotebookPen, Settings, TestTube } from "lucide-react";
+import { Book, Code, CreditCard, Database, FolderCode, Globe, Home,  Lock, NotebookPen, Settings, TestTube } from "lucide-react";
 import { DocsConfig } from "types";
 
 export const docsConfig: DocsConfig = {
@@ -60,14 +60,14 @@ export const docsConfig: DocsConfig = {
           icon: Settings
         },
         {
+          title: "SEO",
+          href: "/docs/configuration/seo",
+          icon: Globe
+        },
+        {
           title: "Database",
           href: "/docs/configuration/database",
           icon: Database
-        },
-        {
-          title: "Layouts",
-          href: "/docs/configuration/layouts",
-          icon: Layout
         },
         {
           title: "Markdown files",
