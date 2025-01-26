@@ -1,26 +1,17 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type BlogPost = {
-  slug: string;
-  created_at: string;
-};
+import { env } from "@/env"
+import { allDocs } from "contentlayer/generated"
 
 type SitemapEntry = {
-  url: string;
-  lastModified: string;
-  changeFrequency:
-  | "always"
-  | "hourly"
-  | "daily"
-  | "weekly"
-  | "monthly"
-  | "yearly"
-  | "never";
-  priority?: number;
-};
+  url: string
+  lastModified: string
+  changeFrequency: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
+  priority?: number
+}
 
 export default async function sitemap(): Promise<SitemapEntry[]> {
-  const baseUrl = "https://starter.xyz";
+  const baseUrl = env.NEXT_PUBLIC_APP_URL
 
+  // Static pages
   const staticPages: SitemapEntry[] = [
     {
       url: baseUrl,
@@ -34,7 +25,15 @@ export default async function sitemap(): Promise<SitemapEntry[]> {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-  ];
+  ]
 
-  return [...staticPages];
+  // Dynamic blog posts
+  const blogPosts: SitemapEntry[] = allDocs.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }))
+
+  return [...staticPages, ...blogPosts]
 }
