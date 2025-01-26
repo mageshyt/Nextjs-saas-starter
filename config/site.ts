@@ -11,7 +11,7 @@ export const siteConfig: SiteConfig = {
   ogImage: `${site_url}/_static/og.png`,
   links: {
     twitter: "https://twitter.com/mageshyt",
-    github: "https://github.com/mageshyt/next-saas-starter",
+    github: "https://github.com/mageshyt/nextjs-saas-starter",
   },
   mailSupport: "support@next-saas-starter.com",
 };
