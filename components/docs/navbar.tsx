@@ -48,7 +48,7 @@ const DocsNavBar = () => {
             <SearchCommandMenu />
           </div>
           <a
-            href="https://github.com/yourusername/yourrepo"
+            href="https://github.com/mageshyt/nextjs-saas-starter"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9"
