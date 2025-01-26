@@ -24,7 +24,7 @@ export const DocsPageHeader = ({
       </div>
 
       <div className={cn("space-y-2", className)} {...props}>
-        <h1 className="inline-block scroll-m-20 font-heading text-4xl">
+        <h1 className="inline-block scroll-m-20 font-bold text-4xl">
           {heading}
         </h1>
         {text && (
