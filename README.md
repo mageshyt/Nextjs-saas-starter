@@ -54,7 +54,7 @@ bun run dev
 
 ## 📚 Documentation
 
-Visit our [documentation](https://nextjs-sass-starterkit.vercel.app/docs) to learn more about:
+Visit our [documentation](https://nextjs-saas-starterkit.vercel.app/docs) to learn more about:
 
 ## 🧪 Testing
 
@@ -89,7 +89,7 @@ If you find this project helpful, please consider:
 ## 🔗 Links
 
 - [Website](https://magesh-portfolio.vercel.app/)
-- [Documentation](https://nextjs-sass-starterkit.vercel.app/docs)
+- [Documentation](https://nextjs-saas-starterkit.vercel.app/docs)
 - [GitHub Repository](https://github.com/mageshyt/nextjs-saas-starter)
 
 ## Credits & Thanks 🙏
