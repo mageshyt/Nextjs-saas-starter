@@ -1,0 +1,181 @@
+---
+title: SEO Configuration in Next.js
+description: Learn how to optimize metadata for better SEO in Next.js.
+---
+
+
+<Callout type="info">
+Next.js has a Metadata API that can be used to define your application metadata for improved SEO and web shareability.
+</Callout>
+
+## Adding Metadata
+
+There are two ways you can add metadata to your application:
+
+- **Config-based Metadata**: Export a static `metadata` object or a dynamic `generateMetadata` function in a `layout.js` or `page.js` file.
+- **File-based Metadata**: Add static or dynamically generated special files to route segments.
+
+## Static Metadata
+
+To define static metadata, export a `Metadata` object in a `layout.js` or static `page.js` file.
+
+```jsx
+// layout.tsx | page.tsx
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  keywords: ["SAAS", "AI", ...],
+  title: {
+    default: "MySite",
+    template: "%s | MySite"
+  },
+  description: '...',
+}
+
+export default function Page() {}
+```
+
+## Dynamic Metadata
+
+You can use the `generateMetadata` function to fetch metadata that requires dynamic values.
+
+```jsx
+// app/blogs/[slug]/page.tsx
+import type { Metadata, ResolvingMetadata } from 'next'
+
+type Props = {
+  params: { slug: string }
+}
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug
+
+  // fetch data
+  const blog = getblogDetail(slug)
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: blog.title,
+    description: blog.description,
+    openGraph: {
+      title: blog.title,
+      description: blog.excerpt,
+      type: "article",
+      locale: "en_US",
+      url: `https://mysite.app/tech-blog/${slug}`,
+      siteName: "MySite",
+    },
+  }
+}
+
+export default function Page({ params, searchParams }: Props) {}
+```
+
+- Both static and dynamic metadata through `generateMetadata` are only supported in Server Components.
+- `getblogDetail()` requests are automatically memoized for the same data across `generateMetadata`, `generateStaticParams`, Layouts, Pages, and Server Components. React `cache` can be used if `fetch` is unavailable.
+- Next.js will wait for data fetching inside `generateMetadata` to complete before streaming UI to the client. This guarantees the first part of a streamed response includes `<head>` tags.
+
+## File-based Metadata
+
+These special files are available for metadata:
+
+- favicon.ico, apple-icon.jpg, and icon.jpg
+- opengraph-image.jpg and twitter-image.jpg
+- [robots.txt](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots)
+- [sitemap.xml](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap)
+
+### SiteMap
+
+Sitemaps help search engines understand a website and locate specific pages. They also help users navigate the site.
+
+```jsx
+// app/sitemap.ts  (App Router)
+import type { MetadataRoute } from 'next'
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: 'https://acme.com',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 1,
+    },
+    {
+      url: 'https://acme.com/about',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://acme.com/blog',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.5,
+    },
+  ]
+}
+```
+
+We can even use the `generateSitemaps` function to generate dynamic routes for each blog post.
+
+```jsx
+// app/sitemap.ts  (App Router)
+export async function generateSitemaps() {
+  // the number of blog posts you have
+  return [{ id: "one" }, { id: "two" }, { id: "three" }, { id: "four" }];
+}
+
+export default async function sitemap({
+  id,
+}: {
+  id: string;
+}): Promise<MetadataRoute.Sitemap> {
+  // we can now fetch the blog from our DB using id.
+}
+```
+
+### robots.txt
+
+A file that tells search engine crawlers which pages of a website they can access.
+
+```jsx
+// app/robot.ts  (App Router)
+import type { MetadataRoute } from 'next'
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: '/private/',
+    },
+    sitemap: 'https://acme.com/sitemap.xml',
+  }
+}
+```
+
+## Ordering
+
+Metadata is evaluated in order, starting from the root segment down to the segment closest to the final `page.js` segment. For example:
+
+1. `app/layout.tsx` (Root Layout)
+2. `app/blog/layout.tsx` (Nested Blog Layout)
+3. `app/blog/[slug]/page.tsx` (Blog Page)
+
+## Additional References
+This research is done at the request of a client and reflects the Next SAAS Starter context.
+
+For more details, see the referenced video:
+<iframe 
+    className="mt-6 aspect-video w-full rounded-lg"  
+    src="https://www.youtube.com/embed/dmikdnfpCw0" 
+    title="SEO in Nextjs 14 Tutorial"  
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerPolicy="strict-origin-when-cross-origin" allowFullScreen >
+</iframe>

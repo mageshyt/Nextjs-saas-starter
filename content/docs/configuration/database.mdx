@@ -3,7 +3,6 @@ title: Database Configuration
 description: A quick overview on setting up Prisma with a PostgreSQL database.
 ---
 
-# Database Configuration
 
 This guide provides a basic overview of using [Prisma](https://www.prisma.io/) with a PostgreSQL database in your Next.js SaaS Starter.
 
@@ -50,7 +49,7 @@ prisma/
 
 Edit the `schema.prisma` file to define your database schema:
 
-```prisma title="prisma/schema.prisma"
+```prisma title="prisma/schema.prisma"{3}
 
 datasource db {
   provider = "postgresql"
@@ -98,4 +97,13 @@ Run the following command to open Prisma Studio:
 ```bash
 bunx prisma studio
 ```
+
+
+### Additional Resources
+
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [Visualize Schema](https://chartdb.io/diagrams)
+
+<iframe src="https://chartdb.io" className="mt-6 w-full rounded-lg h-96" title="ChartDB Schema Visualizer" sandbox="allow-scripts allow-same-origin" loading="lazy" ></iframe>
+
 </Steps>
