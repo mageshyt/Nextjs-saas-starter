@@ -25,9 +25,10 @@ A modern, feature-rich starter kit for building SaaS applications with Next.js 1
 
 ## ✨ Features
 
-- 🏗️ **Next.js 15** - The React framework for production
-- 🔐 **Clerk** - Authentication with multiple providers
+- 🏗️ **Next.js 14** - The React framework for production
+- 🔐 **Auth.js v5** - Authentication with multiple providers
 - 💳 **Stripe** - Subscription payments and billing
+- 📧 **React Email & Resend** - Beautiful transactional emails
 - 🎨 **Shadcn/ui** - Beautiful and accessible UI components
 - 🗃️ **Prisma & Neon** - Type-safe database operations
 - 📝 **MDX** - Content management with Markdown
@@ -49,6 +50,32 @@ cp .env.example .env
 
 # Start development server
 bun run dev
+```
+
+## 📁 Project Structure
+
+```bash
+.
+├── app/
+│   ├── (auth)/        # Authentication routes
+│   ├── (dashboard)/   # Protected dashboard routes
+│   ├── (marketing)/   # Public marketing pages
+│   ├── api/           # API routes
+│   └── layout.tsx     # Root layout
+├── components/
+│   ├── ui/            # Reusable UI components
+│   ├── forms/         # Form components
+│   └── global/        # Shared components
+├── lib/               # Core library code
+├── utils/            # Utility functions & helpers
+├── config/           # Application configuration
+├── types/            # TypeScript type definitions
+├── prisma/
+│   └── schema.prisma  # Database schema
+├── public/            # Static assets
+├── styles/           # Global styles
+├── tests/            # Test files
+└── emails/           # Email templates
 ```
 
 ## 📚 Documentation
