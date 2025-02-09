@@ -66,6 +66,11 @@ bun run dev
 │   ├── ui/            # Reusable UI components
 │   ├── forms/         # Form components
 │   └── global/        # Shared components
+├── content/
+│   ├── blog/          # Blog posts and articles
+│   ├── docs/          # Documentation pages
+│   ├── guides/        # User guides and tutorials
+│   └── pages/         # Static pages content
 ├── lib/               # Core library code
 ├── utils/            # Utility functions & helpers
 ├── config/           # Application configuration

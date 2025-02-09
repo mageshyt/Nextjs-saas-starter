@@ -1,6 +1,6 @@
 export const BLOG_CATEGORIES: {
   title: string;
-  slug: "news" | "education";
+  slug: "news" | "education"| "nextjs" | "deployment";
   description: string;
 }[] = [
   {
@@ -13,6 +13,15 @@ export const BLOG_CATEGORIES: {
     slug: "education",
     description: "Educational content about SaaS management.",
   },
+  {
+    title: "Next.js",
+    slug: "nextjs",
+    description: "Next.js tips and tricks.",
+  },{
+    title: "Deployment",
+    slug: "deployment",
+    description: "Deployment tips and tricks.",
+  }
 ];
 
 export const BLOG_AUTHORS = {
